@@ -8,6 +8,7 @@ const MainLayout: React.FC = () => {
         <nav className="container mx-auto flex justify-between">
           <Link to="/" className="font-bold">E-Commerce</Link>
           <div>
+            <Link to="/catalog" className="mr-4">Catálogo</Link>
             <Link to="/login" className="mr-4">Login</Link>
             <Link to="/admin">Admin</Link>
           </div>
