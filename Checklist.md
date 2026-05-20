@@ -20,10 +20,10 @@ Este documento es nuestra fuente de verdad para no saltarnos pasos y llevar un o
 ## Etapa 3. Autenticación y Roles
 - [x] Crear `AuthContext` y hook `useAuth`.
 - [x] Crear pantalla de Login / Registro base.
-- [ ] Conectar la app localmente a Firebase y probar que el Registro y Login funcionan en el navegador.
-- [ ] Verificar creación del usuario en Authentication y en Firestore (colección `users`).
-- [ ] Aplicar/probar las rutas protegidas (`RequireAuth`, `RequireAdmin`).
-- [ ] *[COMMIT: feat: validar e integrar flujos de autenticación]*
+- [x] Conectar la app localmente a Firebase y probar que el Registro y Login funcionan en el navegador.
+- [x] Verificar creación del usuario en Authentication y en Firestore (colección `users`).
+- [x] Aplicar/probar las rutas protegidas (`RequireAuth`, `RequireAdmin`).
+- [x] *[COMMIT: feat: validar e integrar flujos de autenticación]*
 
 ## Etapa 4. Catálogo y Navegación
 - [x] Crear tipos de datos (`Product`).
