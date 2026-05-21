@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { getProductById } from '../services/products'
+import { useCart } from '../contexts/CartContext'
 import type { Product } from '../types/product'
 
 const ProductDetail: React.FC = () => {
@@ -8,6 +9,8 @@ const ProductDetail: React.FC = () => {
   const [product, setProduct] = useState<Product | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  
+  const { addItem, openCart } = useCart()
 
   useEffect(() => {
     if (!id) return
@@ -60,9 +63,13 @@ const ProductDetail: React.FC = () => {
             </div>
             
             <button 
+              onClick={() => {
+                addItem(product)
+                openCart()
+              }}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-colors"
             >
-              Añadir al carrito (Próximamente)
+              Añadir al carrito
             </button>
           </div>
         </div>

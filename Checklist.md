@@ -36,10 +36,10 @@ Este documento es nuestra fuente de verdad para no saltarnos pasos y llevar un o
 - [x] *[COMMIT: feat: implementar filtros y detalle del catálogo]*
 
 ## Etapa 5. Carrito de Compras
-- [ ] Crear `CartContext` con `useReducer`.
-- [ ] Implementar UI de carrito flotante o página dedicada.
-- [ ] Funciones: Agregar, Quitar, Editar cantidad, Limpiar.
-- [ ] Persistencia (localStorage o memoria).
+- [x] Crear `CartContext` con `useReducer`.
+- [x] Implementar UI de carrito flotante o página dedicada.
+- [x] Funciones: Agregar, Quitar, Editar cantidad, Limpiar.
+- [x] Persistencia (localStorage o memoria).
 - [ ] *[COMMIT: feat: implementar carrito de compras con contexto]*
 
 ## Etapa 6. Checkout y Órdenes

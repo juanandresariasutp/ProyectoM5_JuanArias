@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { fetchProducts } from '../services/products'
+import { useCart } from '../contexts/CartContext'
 import type { Product } from '../types/product'
 
 const Catalog: React.FC = () => {
@@ -11,6 +12,8 @@ const Catalog: React.FC = () => {
   // Estados para filtros
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('')
+
+  const { addItem, openCart, totalItems } = useCart()
 
   useEffect(() => {
     fetchProducts()
@@ -34,7 +37,22 @@ const Catalog: React.FC = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-8">
-      <h1 className="text-3xl font-extrabold mb-8 text-gray-800">Catálogo de Productos</h1>
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-extrabold text-gray-800">Catálogo de Productos</h1>
+        
+        {/* Botón para abrir el carrito manualmente */}
+        <button 
+          onClick={openCart}
+          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-bold transition-colors"
+        >
+          <span>🛒 Carrito</span>
+          {totalItems > 0 && (
+            <span className="bg-white text-blue-600 text-xs px-2 py-1 rounded-full">
+              {totalItems}
+            </span>
+          )}
+        </button>
+      </div>
       
       {/* Barra de Filtros y Búsqueda */}
       <div className="flex flex-col sm:flex-row gap-4 mb-8 bg-gray-50 p-4 rounded-lg border">
@@ -87,12 +105,23 @@ const Catalog: React.FC = () => {
                     Stock: {prod.stock ?? 0}
                   </span>
                 </div>
-                <Link 
-                  to={`/product/${prod.id}`} 
-                  className="w-full block text-center bg-gray-800 text-white font-semibold py-2 rounded hover:bg-gray-900 transition-colors"
-                >
-                  Ver Detalles
-                </Link>
+                <div className="flex gap-2">
+                  <button 
+                    onClick={() => {
+                      addItem(prod)
+                      openCart()
+                    }}
+                    className="w-1/2 text-center bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700 transition-colors"
+                  >
+                    Sumar
+                  </button>
+                  <Link 
+                    to={`/product/${prod.id}`} 
+                    className="w-1/2 text-center bg-gray-800 text-white font-semibold py-2 rounded hover:bg-gray-900 transition-colors"
+                  >
+                    Detalles
+                  </Link>
+                </div>
               </div>
             </div>
           ))}
