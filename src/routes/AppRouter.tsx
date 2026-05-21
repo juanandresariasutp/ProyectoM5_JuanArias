@@ -6,6 +6,7 @@ import Catalog from '../pages/Catalog'
 import ProductDetail from '../pages/ProductDetail'
 import { useAuth } from '../contexts/AuthContext'
 import AdminLayout from '../layouts/AdminLayout'
+import CartDrawer from '../components/CartDrawer'
 
 function RequireAuth({ children }: { children: JSX.Element }) {
   const { user, loading } = useAuth()
@@ -38,6 +39,7 @@ const AppRouter: React.FC = () => {
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <CartDrawer />
     </BrowserRouter>
   )
 }
