@@ -1,0 +1,94 @@
+import React from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
+import { useCart } from '../contexts/CartContext'
+
+const Navbar: React.FC = () => {
+  const { user, logout } = useAuth()
+  const { totalItems, openCart } = useCart()
+  const navigate = useNavigate()
+
+  const handleLogout = async () => {
+    try {
+      await logout()
+      navigate('/')
+    } catch (error) {
+      console.error('Error al cerrar sesión', error)
+    }
+  }
+
+  return (
+    <nav className="bg-white shadow">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
+          
+          {/* Lado izquierdo: Logo y enlaces */}
+          <div className="flex">
+            <div className="flex-shrink-0 flex items-center">
+              <Link to="/" className="text-xl font-bold text-gray-800">
+                Mi E-commerce
+              </Link>
+            </div>
+            <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+              <Link
+                to="/"
+                className="text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-gray-300 text-sm font-medium"
+              >
+                Inicio
+              </Link>
+              <Link
+                to="/catalog"
+                className="text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-gray-300 text-sm font-medium"
+              >
+                Catálogo
+              </Link>
+            </div>
+          </div>
+
+          {/* Lado derecho: Carrito y Auth */}
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={openCart}
+              className="relative p-2 text-gray-600 hover:text-gray-900 transition-colors"
+              aria-label="Abrir carrito"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>
+              {totalItems > 0 && (
+                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-red-600 rounded-full">
+                  {totalItems}
+                </span>
+              )}
+            </button>
+
+            {user ? (
+              <div className="flex items-center space-x-4 ml-4 border-l pl-4">
+                <span className="text-sm text-gray-700 hidden sm:block">
+                  {user.email}
+                </span>
+                <button
+                  onClick={handleLogout}
+                  className="text-sm font-medium text-red-600 hover:text-red-500"
+                >
+                  Cerrar Sesión
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center space-x-4 ml-4 border-l pl-4">
+                <Link
+                  to="/login"
+                  className="text-sm font-medium text-blue-600 hover:text-blue-500"
+                >
+                  Iniciar Sesión
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </nav>
+  )
+}
+
+export default Navbar

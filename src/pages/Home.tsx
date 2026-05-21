@@ -1,32 +1,35 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import { useNavigate } from 'react-router-dom'
 
 const Home: React.FC = () => {
-  const { user, logout } = useAuth()
-  const navigate = useNavigate()
-
-  const handleLogout = async () => {
-    await logout()
-    navigate('/login')
-  }
+  const { user } = useAuth()
 
   return (
-    <div className="text-center p-8">
-      <h1 className="text-3xl font-bold">Bienvenido al e-commerce</h1>
-      <p className="mt-4 mb-4">Esta es la página de inicio mínima para pruebas.</p>
+    <div className="text-center py-20 px-4 sm:px-6 lg:px-8">
+      <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 mb-6">
+        Bienvenido a Nuestro E-commerce
+      </h1>
+      <p className="mt-4 mb-8 text-lg text-gray-600 max-w-2xl mx-auto">
+        Explora nuestros productos, añade los que más te gusten al carrito, y finaliza tu compra en unos pocos clics.
+      </p>
       
-      {user && (
-        <div className="bg-gray-100 p-4 rounded inline-block">
-          <p className="mb-2">Logueado como: <strong>{user.email}</strong></p>
-          <button 
-            onClick={handleLogout}
-            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+      <div className="flex justify-center gap-4">
+        <Link 
+          to="/catalog"
+          className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-md shadow hover:bg-blue-700 transition"
+        >
+          Ver Catálogo
+        </Link>
+        {!user && (
+          <Link 
+            to="/login"
+            className="px-6 py-3 bg-gray-100 text-gray-700 font-semibold rounded-md shadow hover:bg-gray-200 transition"
           >
-            Cerrar sesión
-          </button>
-        </div>
-      )}
+            Iniciar Sesión
+          </Link>
+        )}
+      </div>
     </div>
   )
 }

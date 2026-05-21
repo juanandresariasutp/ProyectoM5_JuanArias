@@ -42,6 +42,13 @@ Este documento es nuestra fuente de verdad para no saltarnos pasos y llevar un o
 - [x] Persistencia (localStorage o memoria).
 - [ ] *[COMMIT: feat: implementar carrito de compras con contexto]*
 
+## Etapa 5.5. Layout Principal y Navegación Visual
+- [x] Crear componente `Navbar` (logo, links de catálogo, botón de carrito, acciones de usuario).
+- [x] Crear componente `MainLayout` para agrupar todas las rutas bajo una misma estructura.
+- [x] Conectar `useAuth` al Navbar para mostrar info del usuario logueado y botón de cerrar sesión.
+- [x] Conectar `useCart` al Navbar para permitir abrir el carrito (`CartDrawer`).
+- [x] *[COMMIT: feat: integrar Navbar y navegación visual]*
+
 ## Etapa 6. Checkout y Órdenes
 - [ ] Pantalla de revisión de carrito y checkout.
 - [ ] Simulación de pago y guardar la orden en Firestore (estado: `pending`).

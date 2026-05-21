@@ -1,23 +1,17 @@
 import React from 'react'
-import { Outlet, Link } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
+import Navbar from '../components/Navbar'
 
 const MainLayout: React.FC = () => {
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="p-4 border-b">
-        <nav className="container mx-auto flex justify-between">
-          <Link to="/" className="font-bold">E-Commerce</Link>
-          <div>
-            <Link to="/catalog" className="mr-4">Catálogo</Link>
-            <Link to="/login" className="mr-4">Login</Link>
-            <Link to="/admin">Admin</Link>
-          </div>
-        </nav>
-      </header>
-      <main className="flex-1 container mx-auto p-4">
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      <Navbar />
+      <main className="flex-1 container mx-auto p-4 sm:p-6 lg:p-8">
         <Outlet />
       </main>
-      <footer className="p-4 border-t text-center">© Proyecto M5</footer>
+      <footer className="p-4 border-t text-center text-gray-500 bg-white shadow-sm mt-auto">
+        © {new Date().getFullYear()} Proyecto M5 - E-commerce
+      </footer>
     </div>
   )
 }
