@@ -29,11 +29,11 @@ Este documento es nuestra fuente de verdad para no saltarnos pasos y llevar un o
 - [x] Crear tipos de datos (`Product`).
 - [x] Crear servicio base para leer Firestore (`fetchProducts`).
 - [x] Implementar página básica de Catálogo (`Catalog.tsx`).
-- [ ] Insertar datos de prueba en la colección `products` de Firestore.
-- [ ] Verificar que el catálogo renderiza los productos de la base de datos real.
-- [ ] Agregar vista de 'Detalle de producto'.
-- [ ] Implementar barra de búsqueda y filtros.
-- [ ] *[COMMIT: feat: implementar filtros y detalle del catálogo]*
+- [x] Insertar datos de prueba en la colección `products` de Firestore.
+- [x] Verificar que el catálogo renderiza los productos de la base de datos real.
+- [x] Agregar vista de 'Detalle de producto'.
+- [x] Implementar barra de búsqueda y filtros.
+- [x] *[COMMIT: feat: implementar filtros y detalle del catálogo]*
 
 ## Etapa 5. Carrito de Compras
 - [ ] Crear `CartContext` con `useReducer`.

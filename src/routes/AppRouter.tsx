@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom
 import Home from '../pages/Home'
 import Login from '../pages/Login'
 import Catalog from '../pages/Catalog'
+import ProductDetail from '../pages/ProductDetail'
 import { useAuth } from '../contexts/AuthContext'
 import AdminLayout from '../layouts/AdminLayout'
 
@@ -27,6 +28,7 @@ const AppRouter: React.FC = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/catalog" element={<Catalog />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/login" element={<Login />} />
 
         <Route
