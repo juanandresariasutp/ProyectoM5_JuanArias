@@ -63,11 +63,14 @@ Este documento es nuestra fuente de verdad para no saltarnos pasos y llevar un o
 - [x] Crear Listado y gestión de Órdenes (cambiar estados).
 - [x] *[COMMIT: feat: dashboard admin completo]*
 
+## Etapa 7.5 (Pendiente para el final)
+- [ ] Agregar métricas y tarjetas de resumen al `AdminDashboard.tsx`.
+
 ## Etapa 8. Imágenes y AWS S3
-- [ ] Crear función serverless en Vercel para generar Presigned URLs.
-- [ ] Conectar función con el formulario de creación de productos (Admin).
-- [ ] Validación de subida correcta de la imagen y guardado seguro en Firestore.
-- [ ] *[COMMIT: feat: subida de imágenes a S3]*
+- [x] Crear función serverless en Vercel para generar Presigned URLs.
+- [x] Conectar función con el formulario de creación de productos (Admin).
+- [x] Validación de subida correcta de la imagen y guardado seguro en Firestore.
+- [x] *[COMMIT: feat: subida de imágenes a S3]*
 
 ## Etapa 9. Testing
 - [ ] Configurar tests y mocks para Firebase / AWS.

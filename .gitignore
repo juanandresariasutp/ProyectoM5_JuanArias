@@ -28,3 +28,5 @@ dist-ssr
 .PlanProyecto.md
 .PlanIA.md
 .env
+
+.vercel

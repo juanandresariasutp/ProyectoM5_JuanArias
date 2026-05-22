@@ -15,7 +15,9 @@ const AdminProducts: React.FC = () => {
   const [stock, setStock] = useState(0)
   const [description, setDescription] = useState('')
   const [category, setCategory] = useState('')
-  const [image, setImage] = useState('') // Por ahora solo la URL cruda
+  const [image, setImage] = useState('') 
+  const [file, setFile] = useState<File | null>(null)
+  const [uploadingImage, setUploadingImage] = useState(false)
 
   const loadProducts = async () => {
     setLoading(true)
@@ -40,6 +42,7 @@ const AdminProducts: React.FC = () => {
     setDescription('')
     setCategory('')
     setImage('')
+    setFile(null)
     setIsEditing(false)
     setEditingId(null)
   }
@@ -69,13 +72,48 @@ const AdminProducts: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
+    let finalImageUrl = image
+
+    // Si el usuario seleccionó un archivo local, lo subimos a AWS S3
+    if (file) {
+      setUploadingImage(true)
+      try {
+        // 1. Pedimos a nuestro servidor Vercel la URL firmada (authorization ticket)
+        const res = await fetch('/api/upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ filename: file.name, fileType: file.type })
+        })
+        
+        if (!res.ok) throw new Error('Error al obtener presigned URL')
+        const { presignedUrl, finalUrl } = await res.json()
+
+        // 2. Subimos el archivo físicamente a la URL que nos dio AWS
+        const uploadRes = await fetch(presignedUrl, {
+          method: 'PUT',
+          body: file,
+          headers: { 'Content-Type': file.type }
+        })
+
+        if (!uploadRes.ok) throw new Error('Error al subir a S3')
+        
+        finalImageUrl = finalUrl
+      } catch (error) {
+        console.error('S3 Upload Error:', error)
+        alert('Hubo un error subiendo la imagen a AWS. ' + (error as Error).message)
+        setUploadingImage(false)
+        return // Rompemos flujo si falla la imagen
+      }
+      setUploadingImage(false)
+    }
+    
     const productData = { 
       name, 
       price: Number(price), 
       stock: Number(stock),
       description, 
       category, 
-      image 
+      image: finalImageUrl 
     }
 
     try {
@@ -134,8 +172,25 @@ const AdminProducts: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-sm text-gray-700 font-medium mb-1">URL de la Imagen</label>
-              <input type="text" value={image} onChange={e => setImage(e.target.value)} placeholder="https://... o en blanco" className="w-full p-2 border rounded" />
+              <label className="block text-sm text-gray-700 font-medium mb-1">Imagen (URL o Archivo)</label>
+              <input 
+                type="text" 
+                value={image} 
+                onChange={e => { setImage(e.target.value); setFile(null) }} 
+                placeholder="https://... (URL directa)" 
+                className="w-full p-2 border rounded mb-2 text-sm" 
+              />
+              <input 
+                type="file" 
+                accept="image/*"
+                onChange={e => {
+                  if (e.target.files && e.target.files[0]) {
+                    setFile(e.target.files[0])
+                    setImage('') // Si sube archivo, vaciamos la URL
+                  }
+                }} 
+                className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" 
+              />
             </div>
 
             <div className="md:col-span-2">
@@ -153,9 +208,10 @@ const AdminProducts: React.FC = () => {
               </button>
               <button 
                 type="submit" 
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                disabled={uploadingImage}
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition disabled:opacity-50"
               >
-                {editingId ? 'Actualizar' : 'Guardar'} Producto
+                {uploadingImage ? 'Subiendo imagen...' : editingId ? 'Actualizar' : 'Guardar'}
               </button>
             </div>
           </form>
