@@ -58,3 +58,35 @@ export const getUserOrders = async (userId: string): Promise<Order[]> => {
     throw error
   }
 }
+export const getAllOrders = async (): Promise<Order[]> => {
+  try {
+    const ordersRef = collection(db, 'orders')
+    const snapshot = await getDocs(ordersRef)
+    
+    const orders = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    })) as Order[]
+
+    return orders.sort((a, b) => {
+      const dateA = a.createdAt?.toMillis ? a.createdAt.toMillis() : 0
+      const dateB = b.createdAt?.toMillis ? b.createdAt.toMillis() : 0
+      return dateB - dateA
+    })
+  } catch (error) {
+    console.error("Error obteniendo todas las órdenes:", error)
+    throw error
+  }
+}
+
+export const updateOrderStatus = async (orderId: string, newStatus: Order['status']): Promise<void> => {
+  try {
+    const orderRef = doc(db, 'orders', orderId)
+    const batch = writeBatch(db) // Usamos batch o simplemente updateDoc
+    batch.update(orderRef, { status: newStatus })
+    await batch.commit()
+  } catch (error) {
+    console.error("Error actualizando status de la orden:", error)
+    throw error
+  }
+}

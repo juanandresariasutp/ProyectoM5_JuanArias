@@ -60,8 +60,8 @@ Este documento es nuestra fuente de verdad para no saltarnos pasos y llevar un o
 ## Etapa 7. Panel de Administración
 - [x] Crear Layout final de Admin.
 - [x] Crear CRUD de Productos (Listar, Crear, Updatear, Eliminar).
-- [ ] Crear Listado y gestión de Órdenes (cambiar estados).
-- [ ] *[COMMIT: feat: dashboard admin completo]*
+- [x] Crear Listado y gestión de Órdenes (cambiar estados).
+- [x] *[COMMIT: feat: dashboard admin completo]*
 
 ## Etapa 8. Imágenes y AWS S3
 - [ ] Crear función serverless en Vercel para generar Presigned URLs.
