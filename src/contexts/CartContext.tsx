@@ -24,11 +24,18 @@ function cartReducer(state: CartState, action: CartAction): CartState {
   switch (action.type) {
     case 'ADD_ITEM': {
       const existingIndex = state.items.findIndex(item => item.product.id === action.payload.id)
+      const stock = typeof action.payload.stock === 'number' ? action.payload.stock : Infinity
       if (existingIndex >= 0) {
         const newItems = [...state.items]
-        newItems[existingIndex].quantity += 1
+        const current = newItems[existingIndex]
+        // No superar el stock disponible
+        if (current.quantity < stock) {
+          newItems[existingIndex] = { ...current, quantity: current.quantity + 1 }
+        }
         return { ...state, items: newItems }
       }
+      // Si el stock es 0, no agregamos el producto
+      if (stock <= 0) return state
       return { ...state, items: [...state.items, { product: action.payload, quantity: 1 }] }
     }
     case 'REMOVE_ITEM': {
@@ -40,11 +47,13 @@ function cartReducer(state: CartState, action: CartAction): CartState {
     case 'UPDATE_QUANTITY': {
       return {
         ...state,
-        items: state.items.map(item =>
-          item.product.id === action.payload.productId
-            ? { ...item, quantity: Math.max(1, action.payload.quantity) }
-            : item
-        )
+        items: state.items.map(item => {
+          if (item.product.id !== action.payload.productId) return item
+          const requested = Math.max(1, action.payload.quantity)
+          const stock = typeof item.product.stock === 'number' ? item.product.stock : Infinity
+          const finalQty = Math.min(requested, stock)
+          return { ...item, quantity: finalQty }
+        })
       }
     }
     case 'CLEAR_CART': {

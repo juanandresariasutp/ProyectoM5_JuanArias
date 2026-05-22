@@ -57,6 +57,7 @@ const CartDrawer: React.FC = () => {
                       <button 
                         onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
                         className="px-2 py-1 bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold"
+                        disabled={typeof item.product.stock === 'number' && item.quantity >= (item.product.stock as number)}
                       >
                         +
                       </button>
