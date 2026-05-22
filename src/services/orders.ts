@@ -1,9 +1,25 @@
-import { collection, doc, writeBatch, serverTimestamp, increment, query, where, getDocs } from 'firebase/firestore'
+import { collection, doc, writeBatch, serverTimestamp, increment, query, where, getDocs, getDoc } from 'firebase/firestore'
 import { db } from '../lib/firebase'
 import type { Order } from '../types/order'
 
 export const createOrder = async (orderData: Omit<Order, 'id' | 'createdAt'>): Promise<string> => {
   try {
+    // 0. Verificamos stock actual para cada producto antes de crear la orden
+    const insufficient: string[] = []
+    // Comprobamos stock con getDoc para cada producto
+    for (const item of orderData.items) {
+      const productRef = doc(db, 'products', item.product.id)
+      const snap = await getDoc(productRef)
+      const currentStock = snap.exists() ? (snap.data() as any).stock ?? Infinity : Infinity
+      if (currentStock < item.quantity) {
+        insufficient.push(`${item.product.name} (disponible: ${currentStock}, solicitado: ${item.quantity})`)
+      }
+    }
+
+    if (insufficient.length > 0) {
+      throw new Error(`Stock insuficiente: ${insufficient.join('; ')}`)
+    }
+
     // Inicializamos un Batch para operaciones múltiples atómicas
     const batch = writeBatch(db)
 
