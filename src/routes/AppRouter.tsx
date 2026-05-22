@@ -4,10 +4,18 @@ import Home from '../pages/Home'
 import Login from '../pages/Login'
 import Catalog from '../pages/Catalog'
 import ProductDetail from '../pages/ProductDetail'
+import Checkout from '../pages/Checkout'
 import { useAuth } from '../contexts/AuthContext'
 import MainLayout from '../layouts/MainLayout'
 import AdminLayout from '../layouts/AdminLayout'
 import CartDrawer from '../components/CartDrawer'
+
+function RequireAuth({ children }: { children: React.ReactNode }) {
+  const { user, loading } = useAuth()
+  if (loading) return <div>Loading...</div>
+  if (!user) return <Navigate to="/login" replace />
+  return <>{children}</>
+}
 
 function RequireAdmin({ children }: { children: React.ReactNode }) {
   const { user, role, loading } = useAuth()
@@ -26,11 +34,23 @@ const AppRouter: React.FC = () => {
           <Route path="/catalog" element={<Catalog />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/login" element={<Login />} />
+          <Route
+            path="/checkout"
+            element={
+              <RequireAuth>
+                <Checkout />
+              </RequireAuth>
+            }
+          />
         </Route>
 
         <Route
           path="/admin/*"
-          element={<RequireAdmin><AdminLayout /></RequireAdmin>}
+          element={
+            <RequireAdmin>
+              <AdminLayout />
+            </RequireAdmin>
+          }
         />
 
         <Route path="*" element={<Navigate to="/" replace />} />
