@@ -5,12 +5,13 @@ import { useCart } from '../contexts/CartContext'
 
 const Navbar: React.FC = () => {
   const { user, logout } = useAuth()
-  const { totalItems, openCart } = useCart()
+  const { totalItems, openCart, clearCart } = useCart()
   const navigate = useNavigate()
 
   const handleLogout = async () => {
     try {
       await logout()
+      clearCart() // Limpiamos el carrito (usando el reducer) al cerrar sesión
       navigate('/')
     } catch (error) {
       console.error('Error al cerrar sesión', error)
