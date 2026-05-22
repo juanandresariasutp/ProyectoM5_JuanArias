@@ -1,18 +1,44 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useCart } from '../contexts/CartContext'
 import { useAuth } from '../contexts/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
+import { createOrder } from '../services/orders'
 
 const Checkout: React.FC = () => {
   const { items, totalPrice, totalItems, clearCart } = useCart()
   const { user } = useAuth()
   const navigate = useNavigate()
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const handleSimulatePayment = () => {
-    // Por ahora solo simularemos el pago con un alert y limpiaremos el carrito
-    alert(`¡Compra de $${totalPrice.toFixed(2)} procesada con éxito para ${user?.email}! (Simulación)`)
-    clearCart()
-    navigate('/')
+  const handleSimulatePayment = async () => {
+    if (!user) return
+
+    setIsProcessing(true)
+    setError(null)
+
+    try {
+      // Simulación de delay de pasarela de pago
+      await new Promise(resolve => setTimeout(resolve, 1500))
+
+      // Guardar en Firestore
+      const orderId = await createOrder({
+        userId: user.uid,
+        userEmail: user.email || '',
+        items: items,
+        total: totalPrice,
+        status: 'pending' // Estado inicial simulando que se debe confirmar el pago
+      })
+
+      alert(`¡Compra procesada con éxito! Tu ID de orden es: ${orderId}`)
+      clearCart()
+      navigate('/')
+    } catch (err) {
+      setError('Hubo un problema procesando tu orden. Por favor intenta de nuevo.')
+      console.error(err)
+    } finally {
+      setIsProcessing(false)
+    }
   }
 
   if (items.length === 0) {
@@ -82,10 +108,14 @@ const Checkout: React.FC = () => {
           
           <button 
             onClick={handleSimulatePayment}
-            className="w-full mt-8 bg-green-600 text-white font-bold py-3 rounded-lg hover:bg-green-700 transition shadow-sm"
+            disabled={isProcessing}
+            className={`w-full mt-8 text-white font-bold py-3 rounded-lg transition shadow-sm ${
+              isProcessing ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'
+            }`}
           >
-            Confirmar y Pagar ${totalPrice.toFixed(2)}
+            {isProcessing ? 'Procesando pago...' : `Confirmar y Pagar $${totalPrice.toFixed(2)}`}
           </button>
+          {error && <p className="text-red-500 text-sm mt-3 font-semibold">{error}</p>}
         </div>
       </div>
     </div>
