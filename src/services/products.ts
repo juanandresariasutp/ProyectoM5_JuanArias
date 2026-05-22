@@ -14,3 +14,23 @@ export async function getProductById(id: string): Promise<Product | null> {
   if (!snap.exists()) return null
   return { id: snap.id, ...(snap.data() as any) } as Product
 }
+
+import { addDoc, updateDoc, deleteDoc, serverTimestamp } from 'firebase/firestore'
+
+export async function createProduct(data: Omit<Product, 'id'>): Promise<string> {
+  const docRef = await addDoc(collection(db, 'products'), {
+    ...data,
+    createdAt: serverTimestamp()
+  })
+  return docRef.id
+}
+
+export async function updateProduct(id: string, data: Partial<Product>): Promise<void> {
+  const docRef = doc(db, 'products', id)
+  await updateDoc(docRef, data)
+}
+
+export async function deleteProduct(id: string): Promise<void> {
+  const docRef = doc(db, 'products', id)
+  await deleteDoc(docRef)
+}

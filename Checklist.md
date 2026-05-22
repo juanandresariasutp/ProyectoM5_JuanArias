@@ -58,8 +58,8 @@ Este documento es nuestra fuente de verdad para no saltarnos pasos y llevar un o
 - [x] *[COMMIT: feat: flujo de checkout e historial de órdenes]*
 
 ## Etapa 7. Panel de Administración
-- [ ] Crear Layout final de Admin.
-- [ ] Crear CRUD de Productos (Listar, Crear, Updatear, Eliminar).
+- [x] Crear Layout final de Admin.
+- [x] Crear CRUD de Productos (Listar, Crear, Updatear, Eliminar).
 - [ ] Crear Listado y gestión de Órdenes (cambiar estados).
 - [ ] *[COMMIT: feat: dashboard admin completo]*
 
