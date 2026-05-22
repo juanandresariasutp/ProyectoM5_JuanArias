@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { useCart } from '../contexts/CartContext'
 
 const Navbar: React.FC = () => {
-  const { user, logout } = useAuth()
+  const { user, role, logout } = useAuth()
   const { totalItems, openCart, clearCart } = useCart()
   const navigate = useNavigate()
 
@@ -65,6 +65,14 @@ const Navbar: React.FC = () => {
 
             {user ? (
               <div className="flex items-center space-x-4 ml-4 border-l pl-4">
+                {role === 'admin' && (
+                  <Link
+                    to="/admin"
+                    className="text-sm font-bold text-indigo-600 hover:text-indigo-800"
+                  >
+                    Panel Admin
+                  </Link>
+                )}
                 <Link
                   to="/orders"
                   className="text-sm font-medium text-gray-700 hover:text-blue-600 hidden sm:block"

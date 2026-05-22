@@ -11,6 +11,11 @@ import MainLayout from '../layouts/MainLayout'
 import AdminLayout from '../layouts/AdminLayout'
 import CartDrawer from '../components/CartDrawer'
 
+// Páginas de Administrador
+import AdminDashboard from '../pages/admin/AdminDashboard'
+import AdminProducts from '../pages/admin/AdminProducts'
+import AdminOrders from '../pages/admin/AdminOrders'
+
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth()
   if (loading) return <div>Loading...</div>
@@ -54,13 +59,17 @@ const AppRouter: React.FC = () => {
         </Route>
 
         <Route
-          path="/admin/*"
+          path="/admin"
           element={
             <RequireAdmin>
               <AdminLayout />
             </RequireAdmin>
           }
-        />
+        >
+          <Route index element={<AdminDashboard />} />
+          <Route path="products" element={<AdminProducts />} />
+          <Route path="orders" element={<AdminOrders />} />
+        </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
