@@ -50,9 +50,10 @@ Este documento es nuestra fuente de verdad para no saltarnos pasos y llevar un o
 - [x] *[COMMIT: feat: integrar Navbar y navegación visual]*
 
 ## Etapa 6. Checkout y Órdenes
-- [ ] Pantalla de revisión de carrito y checkout.
-- [ ] Simulación de pago y guardar la orden en Firestore (estado: `pending`).
-- [ ] Limpiar carrito al finalizar.
+- [x] Pantalla de revisión de carrito y checkout.
+- [x] Simulación de pago y guardar la orden en Firestore (estado: `pending`).
+- [x] Limpiar carrito al finalizar.
+- [x] Descontar stock de productos al completar la compra (Batch Firestore).
 - [ ] Vista del usuario: Historial de órdenes y detalles.
 - [ ] *[COMMIT: feat: flujo de checkout e historial de órdenes]*
 
