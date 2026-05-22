@@ -5,6 +5,7 @@ import Login from '../pages/Login'
 import Catalog from '../pages/Catalog'
 import ProductDetail from '../pages/ProductDetail'
 import Checkout from '../pages/Checkout'
+import Orders from '../pages/Orders'
 import { useAuth } from '../contexts/AuthContext'
 import MainLayout from '../layouts/MainLayout'
 import AdminLayout from '../layouts/AdminLayout'
@@ -39,6 +40,14 @@ const AppRouter: React.FC = () => {
             element={
               <RequireAuth>
                 <Checkout />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/orders"
+            element={
+              <RequireAuth>
+                <Orders />
               </RequireAuth>
             }
           />

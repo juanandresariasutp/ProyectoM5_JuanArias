@@ -65,7 +65,14 @@ const Navbar: React.FC = () => {
 
             {user ? (
               <div className="flex items-center space-x-4 ml-4 border-l pl-4">
-                <span className="text-sm text-gray-700 hidden sm:block">
+                <Link
+                  to="/orders"
+                  className="text-sm font-medium text-gray-700 hover:text-blue-600 hidden sm:block"
+                >
+                  Mis Órdenes
+                </Link>
+                <span className="text-sm text-gray-400 hidden lg:block">|</span>
+                <span className="text-sm text-gray-700 hidden lg:block">
                   {user.email}
                 </span>
                 <button

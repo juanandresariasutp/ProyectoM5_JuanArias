@@ -54,8 +54,8 @@ Este documento es nuestra fuente de verdad para no saltarnos pasos y llevar un o
 - [x] Simulación de pago y guardar la orden en Firestore (estado: `pending`).
 - [x] Limpiar carrito al finalizar.
 - [x] Descontar stock de productos al completar la compra (Batch Firestore).
-- [ ] Vista del usuario: Historial de órdenes y detalles.
-- [ ] *[COMMIT: feat: flujo de checkout e historial de órdenes]*
+- [x] Vista del usuario: Historial de órdenes y detalles.
+- [x] *[COMMIT: feat: flujo de checkout e historial de órdenes]*
 
 ## Etapa 7. Panel de Administración
 - [ ] Crear Layout final de Admin.

@@ -1,4 +1,4 @@
-import { collection, doc, writeBatch, serverTimestamp, increment } from 'firebase/firestore'
+import { collection, doc, writeBatch, serverTimestamp, increment, query, where, getDocs } from 'firebase/firestore'
 import { db } from '../lib/firebase'
 import type { Order } from '../types/order'
 
@@ -30,6 +30,31 @@ export const createOrder = async (orderData: Omit<Order, 'id' | 'createdAt'>): P
     return newOrderRef.id
   } catch (error) {
     console.error("Error al crear la orden y actualizar stock:", error)
+    throw error
+  }
+}
+
+export const getUserOrders = async (userId: string): Promise<Order[]> => {
+  try {
+    const ordersRef = collection(db, 'orders')
+    // Obtenemos las órdenes del usuario
+    const q = query(ordersRef, where('userId', '==', userId))
+    const snapshot = await getDocs(q)
+    
+    const orders = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    })) as Order[]
+
+    // Ordenamos localmente por fecha de creación (de más nueva a más vieja)
+    // Se hace localmente para evitar que Firebase pida crear un Índice Compuesto manual
+    return orders.sort((a, b) => {
+      const dateA = a.createdAt?.toMillis ? a.createdAt.toMillis() : 0
+      const dateB = b.createdAt?.toMillis ? b.createdAt.toMillis() : 0
+      return dateB - dateA
+    })
+  } catch (error) {
+    console.error("Error obteniendo las órdenes:", error)
     throw error
   }
 }
