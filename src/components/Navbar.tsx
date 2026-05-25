@@ -20,7 +20,7 @@ const Navbar: React.FC = () => {
   }
 
   return (
-    <nav className="bg-white shadow">
+    <nav className="bg-white shadow sticky top-0 z-30 w-full">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           
@@ -77,7 +77,7 @@ const Navbar: React.FC = () => {
             </button>
 
             {user ? (
-              <div className="flex items-center space-x-4 ml-4 border-l pl-4">
+              <div className="hidden sm:flex items-center space-x-4 ml-4 border-l pl-4">
                 {role === 'admin' && (
                   <Link
                     to="/admin"
@@ -88,12 +88,12 @@ const Navbar: React.FC = () => {
                 )}
                 <Link
                   to="/orders"
-                  className="text-sm font-medium text-gray-700 hover:text-blue-600 hidden sm:block"
+                  className="text-sm font-medium text-gray-700 hover:text-blue-600"
                 >
                   Mis Órdenes
                 </Link>
-                <span className="text-sm text-gray-400 hidden lg:block">|</span>
-                <span className="text-sm text-gray-700 hidden lg:block">
+                <span className="text-sm text-gray-400">|</span>
+                <span className="text-sm text-gray-700">
                   {user.email}
                 </span>
                 <button
@@ -104,7 +104,7 @@ const Navbar: React.FC = () => {
                 </button>
               </div>
             ) : (
-              <div className="flex items-center space-x-4 ml-4 border-l pl-4">
+              <div className="hidden sm:flex items-center space-x-4 ml-4 border-l pl-4">
                 <Link
                   to="/login"
                   className="text-sm font-medium text-blue-600 hover:text-blue-500"
