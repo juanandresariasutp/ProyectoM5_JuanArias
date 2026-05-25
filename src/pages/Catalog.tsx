@@ -82,17 +82,23 @@ const Catalog: React.FC = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {filteredProducts.map(prod => (
-            <div key={prod.id} className="border p-4 rounded-lg shadow-sm flex flex-col bg-white hover:shadow-md transition-shadow">
-              {prod.image ? (
-                <img src={prod.image} alt={prod.name} className="w-full h-48 object-cover mb-4 rounded" />
-              ) : (
-                <div className="w-full h-48 bg-gray-200 mb-4 rounded flex items-center justify-center text-gray-400">Sin imagen</div>
-              )}
+            <div key={prod.id} className="border p-4 rounded-lg shadow-sm flex flex-col bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+              <Link to={`/product/${prod.id}`} className="block group">
+                {prod.image ? (
+                  <div className="overflow-hidden mb-4 rounded">
+                    <img src={prod.image} alt={prod.name} className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+                  </div>
+                ) : (
+                  <div className="w-full h-48 bg-gray-200 mb-4 rounded flex items-center justify-center text-gray-400">Sin imagen</div>
+                )}
+              </Link>
               
               <div className="mb-2">
                 <span className="text-xs font-bold text-gray-400 uppercase">{prod.category || 'General'}</span>
               </div>
-              <h3 className="font-bold text-lg mb-1 truncate" title={prod.name}>{prod.name}</h3>
+              <Link to={`/product/${prod.id}`} className="block">
+                <h3 className="font-bold text-lg mb-1 truncate hover:text-blue-600 transition-colors" title={prod.name}>{prod.name}</h3>
+              </Link>
               
               <p className="text-sm text-gray-600 flex-grow line-clamp-2 mb-4" title={prod.description}>
                 {prod.description}
