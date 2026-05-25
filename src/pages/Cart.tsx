@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useCart } from '../contexts/CartContext'
+import { formatCurrency } from '../utils/format'
 
 const Cart: React.FC = () => {
   const { items, removeItem, updateQuantity, totalPrice, totalItems, clearCart } = useCart()
@@ -52,7 +53,7 @@ const Cart: React.FC = () => {
                       {item.product.name}
                     </Link>
                     <p className="text-[#5f6f6b] font-medium text-sm mt-1">
-                      Precio und: <span className="text-[#3e6b5b]">${item.product.price}</span>
+                      Precio und: <span className="text-[#3e6b5b]">$ {formatCurrency(item.product.price, 0)}</span>
                     </p>
                     <button 
                       onClick={() => removeItem(item.product.id)}
@@ -91,7 +92,7 @@ const Cart: React.FC = () => {
                 <div className="col-span-1 sm:col-span-3 flex justify-between sm:justify-end items-center mt-2 sm:mt-0">
                   <span className="sm:hidden font-medium text-[#5f6f6b]">Subtotal:</span>
                   <span className="font-semibold text-xl text-[#10211f] border-b-2 border-transparent">
-                    ${(item.product.price * item.quantity).toFixed(2)}
+                    $ {formatCurrency(item.product.price * item.quantity, 2)}
                   </span>
                 </div>
               </div>
@@ -118,7 +119,7 @@ const Cart: React.FC = () => {
             <div className="space-y-4 mb-6">
               <div className="flex justify-between text-[#5f6f6b]">
                 <span>Productos ({totalItems})</span>
-                <span className="font-medium">${totalPrice.toFixed(2)}</span>
+                <span className="font-medium">$ {formatCurrency(totalPrice, 2)}</span>
               </div>
               <div className="flex justify-between text-[#5f6f6b]">
                 <span>Envío</span>
@@ -129,7 +130,7 @@ const Cart: React.FC = () => {
             <div className="border-t border-black/5 pt-4 mb-8">
               <div className="flex justify-between items-center">
                 <span className="font-semibold text-lg text-[#10211f]">Total a pagar</span>
-                <span className="font-semibold text-3xl text-[#3e6b5b]">${totalPrice.toFixed(2)}</span>
+                <span className="font-semibold text-3xl text-[#3e6b5b]">$ {formatCurrency(totalPrice, 2)}</span>
               </div>
               <p className="text-xs text-[#5f6f6b] text-right mt-1">Impuestos incluidos</p>
             </div>

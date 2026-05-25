@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { formatCurrency } from '../../utils/format'
 import type { Order } from '../../types/order'
 import { getAllOrders, updateOrderStatus } from '../../services/orders'
 
@@ -56,7 +57,8 @@ const AdminOrders: React.FC = () => {
       </div>
       
       <div className="bg-white/85 backdrop-blur rounded-[2rem] shadow-[0_20px_80px_rgba(16,33,31,0.08)] overflow-hidden border border-black/5">
-        <div className="overflow-x-auto">
+        {/* Tabla para desktop/tablet */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="min-w-full divide-y divide-black/5 text-[#10211f]">
           <thead className="bg-[#f5f7f5]">
             <tr>
@@ -88,7 +90,7 @@ const AdminOrders: React.FC = () => {
                     <div className="text-xs text-[#5f6f6b]">{order.items.length} producto(s)</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-[#10211f]">
-                    ${order.total.toFixed(2)}
+                    $ {formatCurrency(order.total, 2)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
                     <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full border ${getStatusColor(order.status)}`}>
@@ -111,6 +113,49 @@ const AdminOrders: React.FC = () => {
             )}
           </tbody>
           </table>
+        </div>
+
+        {/* Tarjetas para móvil (evita scroll horizontal) */}
+        <div className="md:hidden p-4">
+          {loading ? (
+            <div className="text-[#5f6f6b]">Cargando órdenes...</div>
+          ) : orders.length === 0 ? (
+            <div className="text-[#5f6f6b]">No hay órdenes registradas.</div>
+          ) : (
+            <div className="flex flex-col gap-3">
+              {orders.map(order => (
+                <div key={order.id} className="bg-white rounded-xl p-4 shadow-sm border border-black/5">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <div className="text-sm font-medium text-[#10211f]">{order.id?.slice(0,8)}...</div>
+                      <div className="text-xs text-[#5f6f6b]">{order.createdAt?.toDate ? order.createdAt.toDate().toLocaleDateString() : 'Reciente'}</div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-sm font-semibold text-[#10211f]">$ {formatCurrency(order.total, 2)}</div>
+                      <div className={`mt-1 inline-flex px-2 text-xs leading-5 font-semibold rounded-full border ${getStatusColor(order.status)}`}>
+                        {getStatusText(order.status)}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-3 flex items-center justify-between">
+                    <div className="text-xs text-[#5f6f6b]">{order.userEmail}</div>
+                    <div className="flex items-center gap-2">
+                      <select
+                        className="border border-black/10 p-2 rounded-xl text-sm bg-white text-[#10211f]"
+                        value={order.status}
+                        onChange={(e) => handleStatusChange(order.id!, e.target.value as Order['status'])}
+                      >
+                        <option value="pending">Pendiente</option>
+                        <option value="completed">Completada</option>
+                        <option value="cancelled">Cancelada</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

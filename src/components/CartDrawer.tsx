@@ -1,5 +1,6 @@
 import React from 'react'
 import { useCart } from '../contexts/CartContext'
+import { formatCurrency } from '../utils/format'
 import { Link } from 'react-router-dom'
 
 const CartDrawer: React.FC = () => {
@@ -41,7 +42,7 @@ const CartDrawer: React.FC = () => {
                 <div className="flex-grow flex flex-col justify-between">
                   <div>
                     <h3 className="font-semibold text-sm leading-tight mb-1 text-[#10211f]">{item.product.name}</h3>
-                    <p className="text-[#3e6b5b] font-semibold">${item.product.price}</p>
+                    <p className="text-[#3e6b5b] font-semibold">$ {formatCurrency(item.product.price, 2)}</p>
                   </div>
                   
                   <div className="flex justify-between items-center mt-2">
@@ -78,7 +79,7 @@ const CartDrawer: React.FC = () => {
         <div className="p-4 border-t border-black/5 bg-[#f5f7f5]">
           <div className="flex justify-between items-center mb-4">
             <span className="font-semibold text-[#10211f]">Total:</span>
-            <span className="font-semibold text-2xl text-[#3e6b5b]">${totalPrice.toFixed(2)}</span>
+            <span className="font-semibold text-2xl text-[#3e6b5b]">$ {formatCurrency(totalPrice, 2)}</span>
           </div>
           
           <Link 

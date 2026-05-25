@@ -3,6 +3,7 @@ import { useCart } from '../contexts/CartContext'
 import { useAuth } from '../contexts/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
 import { createOrder } from '../services/orders'
+import { formatCurrency } from '../utils/format'
 
 const Checkout: React.FC = () => {
   const { items, totalPrice, totalItems, clearCart } = useCart()
@@ -102,14 +103,14 @@ const Checkout: React.FC = () => {
                     <p className="text-xs text-[#5f6f6b]">Cant: {item.quantity}</p>
                   </div>
                 </div>
-                <p className="font-semibold text-[#10211f]">${(item.product.price * item.quantity).toFixed(2)}</p>
+                <p className="font-semibold text-[#10211f]">$ {formatCurrency(item.product.price * item.quantity, 2)}</p>
               </div>
             ))}
           </div>
           <div className="border-t border-black/5 pt-4">
             <div className="flex justify-between items-center font-bold text-lg">
               <span>Total ({totalItems} productos)</span>
-              <span className="text-[#3e6b5b]">${totalPrice.toFixed(2)}</span>
+              <span className="text-[#3e6b5b]">$ {formatCurrency(totalPrice, 2)}</span>
             </div>
           </div>
         </div>
@@ -137,7 +138,7 @@ const Checkout: React.FC = () => {
               isProcessing ? 'bg-[#9fb2ab] cursor-not-allowed text-white/80' : 'bg-[#3e6b5b] hover:opacity-95'
             }`}
           >
-            {isProcessing ? 'Procesando pago...' : `Confirmar y Pagar $${totalPrice.toFixed(2)}`}
+            {isProcessing ? 'Procesando pago...' : `Confirmar y Pagar $${formatCurrency(totalPrice, 2)}`}
           </button>
           {error && <p className="text-[#3e6b5b] text-sm mt-3 font-semibold">{error}</p>}
         </div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { getUserOrders } from '../services/orders'
+import { formatCurrency } from '../utils/format'
 import type { Order } from '../types/order'
 import { Link } from 'react-router-dom'
 
@@ -77,7 +78,7 @@ const Orders: React.FC = () => {
               </div>
               <div className="text-right">
                 <p className="text-xs text-gray-500 uppercase font-semibold tracking-wider">Total</p>
-                <p className="text-lg font-bold text-blue-600">${order.total.toFixed(2)}</p>
+                <p className="text-lg font-bold text-blue-600">$ {formatCurrency(order.total, 2)}</p>
               </div>
             </div>
             
@@ -98,7 +99,7 @@ const Orders: React.FC = () => {
                       </div>
                     </div>
                     <p className="text-sm font-semibold text-gray-700">
-                      ${(item.product.price * item.quantity).toFixed(2)}
+                      $ {formatCurrency(item.product.price * item.quantity, 2)}
                     </p>
                   </li>
                 ))}

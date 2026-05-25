@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { formatCurrency } from '../../utils/format'
 import { fetchProducts } from '../../services/products'
 import { getAllOrders } from '../../services/orders'
 import { Link } from 'react-router-dom'
@@ -68,7 +69,7 @@ const AdminDashboard: React.FC = () => {
         <div className="bg-white/85 p-6 rounded-[2rem] shadow-[0_20px_80px_rgba(16,33,31,0.08)] border border-black/5 flex flex-col justify-between">
           <div>
             <h3 className="text-sm font-semibold text-[#3e6b5b] uppercase tracking-[0.2em]">Ingresos Totales</h3>
-            <p className="mt-2 text-3xl font-semibold text-[#10211f]">${metrics.totalRevenue.toFixed(2)}</p>
+            <p className="mt-2 text-3xl font-semibold text-[#10211f]">$ {formatCurrency(metrics.totalRevenue, 2)}</p>
           </div>
           <div className="mt-4 text-xs text-[#5f6f6b]">Excluye órdenes canceladas</div>
         </div>

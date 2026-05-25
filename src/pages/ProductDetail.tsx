@@ -127,33 +127,35 @@ const ProductDetail: React.FC = () => {
           
           {/* Actions */}
           <div className="flex flex-col gap-6 mt-auto">
-            {/* Quantity Selector */}
-            <div className="flex items-center gap-4">
+            {/* Quantity Selector (responsive) */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
               <span className="font-medium text-[#10211f]">Cantidad:</span>
               <div className="flex items-center border border-black/5 rounded-xl bg-white overflow-hidden">
                 <button 
                   onClick={handleDecrement}
                   disabled={quantity <= 1 || limitReached}
-                  className="px-4 py-2 text-[#10211f] hover:bg-black/5 disabled:opacity-40 transition-colors"
+                  className="px-3 sm:px-4 py-2 text-[#10211f] hover:bg-black/5 disabled:opacity-40 transition-colors"
                 >
                   -
                 </button>
-                <span className="px-4 py-2 font-medium border-x border-black/5 min-w-[3rem] text-center text-[#10211f]">
+                <span className="px-3 sm:px-4 py-2 font-medium border-x border-black/5 w-12 text-center text-[#10211f]">
                   {quantity}
                 </span>
                 <button 
                   onClick={handleIncrement}
                   disabled={limitReached || !canIncreaseQuantity}
-                  className="px-4 py-2 text-[#10211f] hover:bg-black/5 disabled:opacity-40 transition-colors"
+                  className="px-3 sm:px-4 py-2 text-[#10211f] hover:bg-black/5 disabled:opacity-40 transition-colors"
                 >
                   +
                 </button>
               </div>
-              {limitReached ? (
-                <span className="text-sm text-red-600 font-medium">Ya alcanzaste el stock disponible para este producto.</span>
-              ) : stockValue !== Infinity ? (
-                <span className="text-sm text-[#5f6f6b] font-medium">Te quedan {remainingStock} unidad{remainingStock === 1 ? '' : 'es'} disponibles.</span>
-              ) : null}
+              <div className="mt-1 sm:mt-0">
+                {limitReached ? (
+                  <div className="text-sm text-red-600 font-medium">Ya alcanzaste el stock disponible para este producto.</div>
+                ) : stockValue !== Infinity ? (
+                  <div className="text-sm text-[#5f6f6b] font-medium">Te quedan {remainingStock} unidad{remainingStock === 1 ? '' : 'es'} disponibles.</div>
+                ) : null}
+              </div>
             </div>
             
             {/* Add to Cart Button */}

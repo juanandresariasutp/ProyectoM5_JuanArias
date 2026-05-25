@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { formatCurrency } from '../utils/format'
 import { fetchProducts } from '../services/products'
 import { useCart } from '../contexts/CartContext'
 import type { Product } from '../types/product'
@@ -82,11 +83,11 @@ const Catalog: React.FC = () => {
               <span className="text-xs text-[#5f6f6b]">{selectedCategory ? 'Filtro activo' : 'Explora por familia'}</span>
             </div>
 
-            <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 lg:flex-wrap lg:overflow-visible">
+            <div className="flex flex-wrap gap-2 pb-1">
               <button
                 type="button"
                 onClick={() => setSelectedCategory('')}
-                className={`shrink-0 rounded-full border px-4 py-2 text-sm font-semibold transition-all duration-200 ${selectedCategory === '' ? 'bg-[#3e6b5b] text-white border-[#3e6b5b] shadow-lg shadow-[#3e6b5b]/15' : 'bg-white text-[#10211f] border-black/10 hover:border-[#3e6b5b]/30 hover:text-[#3e6b5b] hover:bg-[#f5f7f5]'}`}
+                className={`rounded-full border px-4 py-2 text-sm font-semibold transition-all duration-200 ${selectedCategory === '' ? 'bg-[#3e6b5b] text-white border-[#3e6b5b] shadow-lg shadow-[#3e6b5b]/15' : 'bg-white text-[#10211f] border-black/10 hover:border-[#3e6b5b]/30 hover:text-[#3e6b5b] hover:bg-[#f5f7f5]'}`}
               >
                 Todas <span className="ml-1 text-xs opacity-80">({products.length})</span>
               </button>
@@ -98,7 +99,7 @@ const Catalog: React.FC = () => {
                     key={cat}
                     type="button"
                     onClick={() => setSelectedCategory(cat)}
-                    className={`shrink-0 rounded-full border px-4 py-2 text-sm font-semibold transition-all duration-200 ${isActive ? 'bg-[#3e6b5b] text-white border-[#3e6b5b] shadow-lg shadow-[#3e6b5b]/15' : 'bg-white text-[#10211f] border-black/10 hover:border-[#3e6b5b]/30 hover:text-[#3e6b5b] hover:bg-[#f5f7f5]'}`}
+                    className={`rounded-full border px-4 py-2 text-sm font-semibold transition-all duration-200 ${isActive ? 'bg-[#3e6b5b] text-white border-[#3e6b5b] shadow-lg shadow-[#3e6b5b]/15' : 'bg-white text-[#10211f] border-black/10 hover:border-[#3e6b5b]/30 hover:text-[#3e6b5b] hover:bg-[#f5f7f5]'}`}
                   >
                     {cat}
                     <span className={`ml-2 text-xs ${isActive ? 'text-white/80' : 'text-[#5f6f6b]'}`}>
@@ -152,7 +153,7 @@ const Catalog: React.FC = () => {
                   return (
                     <>
                       <div className="flex justify-between items-center mb-4">
-                        <span className="font-semibold text-xl text-[#10211f]">${prod.price}</span>
+                        <span className="font-semibold text-xl text-[#10211f]">$ {formatCurrency(prod.price, 0)}</span>
                         <div className="flex flex-col items-end gap-1">
                           <span className={`text-xs px-2 py-1 rounded-full font-semibold border ${limitReached ? 'bg-red-50 text-red-700 border-red-100' : lowStock ? 'bg-amber-50 text-amber-700 border-amber-100' : prod.stock === 0 ? 'bg-red-50 text-red-700 border-red-100' : 'bg-[#f5f7f5] text-[#3e6b5b] border-black/5'}`}>
                             {limitReached ? 'Límite alcanzado' : prod.stock === 0 ? 'Agotado' : `Stock: ${prod.stock ?? 0}`}
