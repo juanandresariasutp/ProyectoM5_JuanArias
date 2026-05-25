@@ -107,8 +107,8 @@ const Catalog: React.FC = () => {
                 <div className="mt-auto border-t pt-4">
                 <div className="flex justify-between items-center mb-4">
                   <span className="font-bold text-xl text-blue-600">${prod.price}</span>
-                  <span className="text-xs bg-gray-100 px-2 py-1 rounded text-gray-600 font-semibold border">
-                    Stock: {prod.stock ?? 0}
+                  <span className={`text-xs px-2 py-1 rounded font-semibold border ${prod.stock === 0 ? 'bg-red-100 text-red-800 border-red-200' : 'bg-gray-100 text-gray-600'}`}>
+                    {prod.stock === 0 ? 'Agotado' : `Stock: ${prod.stock ?? 0}`}
                   </span>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-2">
@@ -117,7 +117,8 @@ const Catalog: React.FC = () => {
                       addItem(prod)
                       openCart()
                     }}
-                    className="w-full sm:w-1/2 text-center bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700 transition-colors"
+                    disabled={prod.stock === 0}
+                    className="w-full sm:w-1/2 text-center bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Sumar
                   </button>
