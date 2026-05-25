@@ -38,6 +38,7 @@ const Login: React.FC = () => {
   const { login, register, loginWithGoogle } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
+  const from = (location.state as any)?.from?.pathname || '/'
 
   useEffect(() => {
     const params = new URLSearchParams(location.search)
@@ -48,7 +49,7 @@ const Login: React.FC = () => {
     setError(null)
     try {
       await loginWithGoogle()
-      navigate('/')
+      navigate(from, { replace: true })
     } catch (err: any) {
       if (err.code === 'auth/popup-closed-by-user') {
         setError('Cancelaste el inicio de sesión con Google.')
@@ -71,11 +72,11 @@ const Login: React.FC = () => {
         await register(email, password)
         setSuccess('¡Cuenta creada con éxito! Redirigiendo...')
         setTimeout(() => {
-          navigate('/')
+          navigate(from, { replace: true })
         }, 1500)
       } else {
         await login(email, password)
-        navigate('/')
+        navigate(from, { replace: true })
       }
     } catch (err: any) {
       if (err.code === 'auth/email-already-in-use') {

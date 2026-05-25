@@ -52,19 +52,37 @@ const Checkout: React.FC = () => {
       <div className="max-w-3xl mx-auto py-12 text-center bg-white/85 backdrop-blur rounded-[2rem] border border-black/5 px-6 shadow-[0_20px_80px_rgba(16,33,31,0.08)]">
         <h1 className="text-3xl font-semibold text-[#10211f] mb-4">Finalizar Compra</h1>
         <p className="text-[#5f6f6b] mb-8">Tu carrito está vacío. ¡Agrega productos para continuar!</p>
-        <Link 
-          to="/catalog"
-          className="px-6 py-3 bg-[#3e6b5b] text-white font-semibold rounded-xl shadow-lg shadow-[#3e6b5b]/10 hover:opacity-95 transition"
-        >
-          Volver al Catálogo
-        </Link>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <button
+            type="button"
+            onClick={() => navigate(-1)}
+            className="px-6 py-3 rounded-xl border border-black/10 text-[#10211f] font-semibold bg-white hover:bg-[#f5f7f5] transition"
+          >
+            Volver atrás
+          </button>
+          <Link 
+            to="/catalog"
+            className="px-6 py-3 bg-[#3e6b5b] text-white font-semibold rounded-xl shadow-lg shadow-[#3e6b5b]/10 hover:opacity-95 transition"
+          >
+            Volver al Catálogo
+          </Link>
+        </div>
       </div>
     )
   }
 
   return (
     <div className="max-w-4xl mx-auto py-8">
-      <h1 className="text-3xl font-semibold text-[#10211f] mb-8">Finalizar Compra</h1>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+        <h1 className="text-3xl font-semibold text-[#10211f]">Finalizar Compra</h1>
+        <button
+          type="button"
+          onClick={() => navigate(-1)}
+          className="inline-flex items-center justify-center px-5 py-3 rounded-xl border border-black/10 bg-white text-[#10211f] font-semibold hover:bg-[#f5f7f5] transition"
+        >
+          Volver atrás
+        </button>
+      </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Resumen del pedido */}
