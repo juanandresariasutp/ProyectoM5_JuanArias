@@ -98,26 +98,26 @@ const Catalog: React.FC = () => {
                 {prod.description}
               </p>
               
-              <div className="mt-auto border-t pt-4">
+                <div className="mt-auto border-t pt-4">
                 <div className="flex justify-between items-center mb-4">
                   <span className="font-bold text-xl text-blue-600">${prod.price}</span>
                   <span className="text-xs bg-gray-100 px-2 py-1 rounded text-gray-600 font-semibold border">
                     Stock: {prod.stock ?? 0}
                   </span>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row gap-2">
                   <button 
                     onClick={() => {
                       addItem(prod)
                       openCart()
                     }}
-                    className="w-1/2 text-center bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700 transition-colors"
+                    className="w-full sm:w-1/2 text-center bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700 transition-colors"
                   >
                     Sumar
                   </button>
                   <Link 
                     to={`/product/${prod.id}`} 
-                    className="w-1/2 text-center bg-gray-800 text-white font-semibold py-2 rounded hover:bg-gray-900 transition-colors"
+                    className="w-full sm:w-1/2 text-center bg-gray-800 text-white font-semibold py-2 rounded hover:bg-gray-900 transition-colors"
                   >
                     Detalles
                   </Link>

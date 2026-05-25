@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { useCart } from '../contexts/CartContext'
@@ -7,6 +7,7 @@ const Navbar: React.FC = () => {
   const { user, role, logout } = useAuth()
   const { totalItems, openCart, clearCart } = useCart()
   const navigate = useNavigate()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const handleLogout = async () => {
     try {
@@ -43,6 +44,18 @@ const Navbar: React.FC = () => {
               >
                 Catálogo
               </Link>
+            </div>
+            {/* Botón hamburguesa visible solo en móvil */}
+            <div className="sm:hidden flex items-center ml-3">
+              <button
+                onClick={() => setIsMenuOpen(true)}
+                className="p-2 rounded-md text-gray-600 hover:bg-gray-100"
+                aria-label="Abrir menú"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+              </button>
             </div>
           </div>
 
@@ -103,6 +116,33 @@ const Navbar: React.FC = () => {
           </div>
         </div>
       </div>
+      {/* Menú móvil offcanvas */}
+      {isMenuOpen && (
+        <>
+          <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setIsMenuOpen(false)} />
+          <div className="fixed top-0 left-0 w-64 h-full bg-white z-50 shadow-lg p-4">
+            <div className="flex items-center justify-between mb-6">
+              <Link to="/" className="text-lg font-bold text-gray-800">Mi E-commerce</Link>
+              <button onClick={() => setIsMenuOpen(false)} className="text-2xl">&times;</button>
+            </div>
+            <nav className="flex flex-col space-y-3">
+              <Link to="/" onClick={() => setIsMenuOpen(false)} className="text-gray-800 font-medium">Inicio</Link>
+              <Link to="/catalog" onClick={() => setIsMenuOpen(false)} className="text-gray-800 font-medium">Catálogo</Link>
+              {user && role === 'admin' && (
+                <Link to="/admin" onClick={() => setIsMenuOpen(false)} className="text-indigo-600 font-bold">Panel Admin</Link>
+              )}
+              {user ? (
+                <>
+                  <Link to="/orders" onClick={() => setIsMenuOpen(false)} className="text-gray-700">Mis Órdenes</Link>
+                  <button onClick={() => { setIsMenuOpen(false); handleLogout(); }} className="text-red-600 text-left">Cerrar Sesión</button>
+                </>
+              ) : (
+                <Link to="/login" onClick={() => setIsMenuOpen(false)} className="text-blue-600">Iniciar Sesión</Link>
+              )}
+            </nav>
+          </div>
+        </>
+      )}
     </nav>
   )
 }

@@ -77,6 +77,11 @@ Este documento es nuestra fuente de verdad para no saltarnos pasos y llevar un o
 - [ ] Validar que no se puedan agregar más productos al carrito del stock disponible.
 - [ ] Validar stock en el Checkout y evitar stock negativo.
 - [ ] *[COMMIT: fix: validaciones de auth, carrito y stock en checkout]*
+## Etapa 8.5. Validaciones y UX
+- [x] Separar formulario de Login y Registro.
+- [x] Validar que no se puedan agregar más productos al carrito del stock disponible.
+- [x] Validar stock en el Checkout y evitar stock negativo.
+- [x] *[COMMIT: fix: validaciones de auth, carrito y stock en checkout]*
 
 ## Etapa 9. Testing
 - [ ] Configurar tests y mocks para Firebase / AWS.
