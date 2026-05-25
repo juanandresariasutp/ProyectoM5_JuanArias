@@ -83,6 +83,10 @@ Este documento es nuestra fuente de verdad para no saltarnos pasos y llevar un o
 - [x] Validar stock en el Checkout y evitar stock negativo.
 - [x] *[COMMIT: fix: validaciones de auth, carrito y stock en checkout]*
 
+## Notas de validación
+- Cliente: `CartContext` ahora evita aumentar cantidad por encima del stock disponible.
+- Servidor: `createOrder` valida stock antes de commitear el batch y lanza error descriptivo si falta stock.
+
 ## Etapa 9. Testing
 - [ ] Configurar tests y mocks para Firebase / AWS.
 - [ ] Escribir tests unitarios para reducer y hooks (`useCart`, `useAuth`).

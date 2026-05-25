@@ -34,8 +34,14 @@ const Checkout: React.FC = () => {
       clearCart()
       navigate('/')
     } catch (err) {
-      setError('Hubo un problema procesando tu orden. Por favor intenta de nuevo.')
       console.error(err)
+      // Mostrar mensaje detallado si es un error de stock retornado por el servicio
+      if (err instanceof Error && err.message.includes('Stock insuficiente')) {
+        // Extraer la lista de productos insuficientes y mostrarlos tal cual
+        setError(err.message)
+      } else {
+        setError('Hubo un problema procesando tu orden. Por favor intenta de nuevo.')
+      }
     } finally {
       setIsProcessing(false)
     }
