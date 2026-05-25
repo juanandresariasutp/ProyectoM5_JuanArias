@@ -64,7 +64,7 @@ Este documento es nuestra fuente de verdad para no saltarnos pasos y llevar un o
 - [x] *[COMMIT: feat: dashboard admin completo]*
 
 ## Etapa 7.5 (Pendiente para el final)
-- [ ] Agregar métricas y tarjetas de resumen al `AdminDashboard.tsx`.
+- [x] Agregar métricas y tarjetas de resumen al `AdminDashboard.tsx`.
 
 ## Etapa 8. Imágenes y AWS S3
 - [x] Crear función serverless en Vercel para generar Presigned URLs.
@@ -74,11 +74,6 @@ Este documento es nuestra fuente de verdad para no saltarnos pasos y llevar un o
 
 ## Etapa 8.5. Validaciones y UX
 - [x] Separar formulario de Login y Registro.
-- [ ] Validar que no se puedan agregar más productos al carrito del stock disponible.
-- [ ] Validar stock en el Checkout y evitar stock negativo.
-- [ ] *[COMMIT: fix: validaciones de auth, carrito y stock en checkout]*
-## Etapa 8.5. Validaciones y UX
-- [x] Separar formulario de Login y Registro.
 - [x] Validar que no se puedan agregar más productos al carrito del stock disponible.
 - [x] Validar stock en el Checkout y evitar stock negativo.
 - [x] *[COMMIT: fix: validaciones de auth, carrito y stock en checkout]*
@@ -86,6 +81,16 @@ Este documento es nuestra fuente de verdad para no saltarnos pasos y llevar un o
 ## Notas de validación
 - Cliente: `CartContext` ahora evita aumentar cantidad por encima del stock disponible.
 - Servidor: `createOrder` valida stock antes de commitear el batch y lanza error descriptivo si falta stock.
+
+## Progreso reciente
+- Commits locales relevantes:
+	- 8ada360: UI(móvil): sidebar admin responsive, menú hamburguesa y botones apilables en Catálogo
+	- 3738b4e: UI(móvil): tablas admin con scroll horizontal (overflow-x-auto)
+	- 4426b20: fix(checkout): mostrar error detallado de stock; actualizar Checklist.md
+
+## Estado: Validaciones y UX
+- `Manejar error de stock en Checkout (UI)`: completado — la UI ahora muestra el mensaje de "Stock insuficiente" con los detalles de los productos afectados.
+
 
 ## Etapa 9. Testing
 - [ ] Configurar tests y mocks para Firebase / AWS.
