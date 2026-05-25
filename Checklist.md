@@ -99,9 +99,9 @@ Este documento es nuestra fuente de verdad para no saltarnos pasos y llevar un o
 - [x] *[COMMIT: test: añadir cobertura de pruebas]*
 
 ## Etapa 10. Documentación y Deploy
-- [ ] Redactar `README.md` completo (Arquitectura, pasos, etc.).
-- [ ] Incluir Bitácora de decisiones con IA en el README.
-- [ ] Configurar variables de entorno en Vercel.
-- [ ] Desplegar a producción.
-- [ ] Validar despliegue.
+- [x] Redactar README.md completo (Arquitectura, pasos, etc.).
+- [x] Incluir Bitácora de decisiones con IA en el README.
+- [x] Configurar variables de entorno en Vercel.
+- [x] Desplegar a producción.
+- [x] Validar despliegue.
 - [ ] *[COMMIT: docs: actualización final y preparación para deploy]*
