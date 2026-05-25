@@ -11,8 +11,7 @@ const mockProduct: Product = {
   price: 100,
   stock: 5,
   category: 'test',
-  image: 'test.jpg',
-  brand: 'testBrand'
+  image: 'test.jpg'
 }
 
 describe('CartContext', () => {

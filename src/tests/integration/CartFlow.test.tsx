@@ -5,9 +5,8 @@ import { CartProvider } from '../../contexts/CartContext'
 import { MemoryRouter } from 'react-router-dom'
 import { AuthProvider } from '../../contexts/AuthContext'
 import Cart from '../../pages/Cart'
-import ProductDetail from '../../pages/ProductDetail'
 import { useCart } from '../../contexts/CartContext'
-import { Product } from '../../types/product'
+import type { Product } from '../../types/product'
 
 // Un componente wrapper genérico para envolver todas las pruebas
 const AppProviders = ({ children }: { children: React.ReactNode }) => {
