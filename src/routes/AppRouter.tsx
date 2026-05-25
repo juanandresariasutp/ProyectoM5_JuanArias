@@ -6,6 +6,7 @@ import Catalog from '../pages/Catalog'
 import ProductDetail from '../pages/ProductDetail'
 import Checkout from '../pages/Checkout'
 import Orders from '../pages/Orders'
+import Cart from '../pages/Cart'
 import { useAuth } from '../contexts/AuthContext'
 import MainLayout from '../layouts/MainLayout'
 import AdminLayout from '../layouts/AdminLayout'
@@ -39,6 +40,7 @@ const AppRouter: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/catalog" element={<Catalog />} />
           <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
           <Route
             path="/checkout"

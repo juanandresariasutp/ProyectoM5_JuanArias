@@ -82,11 +82,22 @@ const CartDrawer: React.FC = () => {
           </div>
           
           <Link 
-            to="/checkout" // Por ahora es una ruta fantasma
+            to="/cart" 
+            onClick={closeCart}
+            className={`block w-full text-center py-3 mb-2 border border-gray-300 rounded-lg font-bold text-gray-700 transition-colors ${
+              items.length === 0 
+                ? 'opacity-50 cursor-not-allowed pointer-events-none' 
+                : 'bg-white hover:bg-gray-50'
+            }`}
+          >
+            Ver carrito completo
+          </Link>
+          <Link 
+            to="/checkout"
             onClick={closeCart}
             className={`block w-full text-center py-3 rounded-lg font-bold text-white transition-colors ${
               items.length === 0 
-                ? 'bg-gray-400 cursor-not-allowed' 
+                ? 'bg-gray-400 cursor-not-allowed pointer-events-none' 
                 : 'bg-green-600 hover:bg-green-700'
             }`}
           >
