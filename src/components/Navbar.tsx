@@ -107,9 +107,15 @@ const Navbar: React.FC = () => {
               <div className="hidden sm:flex items-center space-x-4 ml-4 border-l border-black/10 pl-4">
                 <Link
                   to="/login"
-                  className="text-sm font-semibold text-[#3e6b5b] hover:text-[#10211f] transition-colors"
+                  className="text-sm font-semibold text-[#10211f] hover:text-[#3e6b5b] transition-colors"
                 >
                   Iniciar Sesión
+                </Link>
+                <Link
+                  to="/login?mode=register"
+                  className="inline-flex items-center justify-center rounded-full bg-[#3e6b5b] px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-[#3e6b5b]/15 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(62,107,91,0.22)] hover:bg-[#345b4e]"
+                >
+                  Crear Cuenta
                 </Link>
               </div>
             )}
@@ -142,7 +148,22 @@ const Navbar: React.FC = () => {
                   </button>
                 </>
               ) : (
-                <Link to="/login" onClick={() => setIsMenuOpen(false)} className="text-[#3e6b5b]">Iniciar Sesión</Link>
+                <>
+                  <Link
+                    to="/login"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="text-[#10211f] font-semibold"
+                  >
+                    Iniciar Sesión
+                  </Link>
+                  <Link
+                    to="/login?mode=register"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="inline-flex items-center justify-center rounded-full bg-[#3e6b5b] px-4 py-2 text-white font-semibold shadow-lg shadow-[#3e6b5b]/15"
+                  >
+                    Crear Cuenta
+                  </Link>
+                </>
               )}
             </nav>
           </div>
