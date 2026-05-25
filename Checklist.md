@@ -93,10 +93,10 @@ Este documento es nuestra fuente de verdad para no saltarnos pasos y llevar un o
 
 
 ## Etapa 9. Testing
-- [ ] Configurar tests y mocks para Firebase / AWS.
-- [ ] Escribir tests unitarios para reducer y hooks (`useCart`, `useAuth`).
-- [ ] Escribir test de integración (simulación de checkout).
-- [ ] *[COMMIT: test: añadir cobertura de pruebas]*
+- [x] Configurar tests y mocks para Firebase / AWS.
+- [x] Escribir tests unitarios para reducer y hooks (`useCart`, `useAuth`).
+- [x] Escribir test de integración (simulación de checkout).
+- [x] *[COMMIT: test: añadir cobertura de pruebas]*
 
 ## Etapa 10. Documentación y Deploy
 - [ ] Redactar `README.md` completo (Arquitectura, pasos, etc.).
