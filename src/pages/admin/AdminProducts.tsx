@@ -135,11 +135,14 @@ const AdminProducts: React.FC = () => {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-800">Gestión de Productos</h1>
+        <div>
+          <p className="text-xs uppercase tracking-[0.35em] text-[#3e6b5b] mb-2">Creati Store</p>
+          <h1 className="text-2xl font-semibold text-[#10211f]">Gestión de Productos</h1>
+        </div>
         {!isEditing && (
           <button 
             onClick={() => setIsEditing(true)}
-            className="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition"
+            className="px-4 py-2 bg-[#3e6b5b] text-white font-semibold rounded-xl hover:opacity-95 transition"
           >
             + Nuevo Producto
           </button>
@@ -147,38 +150,38 @@ const AdminProducts: React.FC = () => {
       </div>
 
       {isEditing ? (
-        <div className="bg-white p-6 rounded-lg shadow border border-gray-200">
-          <h2 className="text-xl font-semibold mb-4">{editingId ? 'Editar Producto' : 'Crear Producto'}</h2>
+        <div className="bg-white/85 backdrop-blur p-6 rounded-[2rem] shadow-[0_20px_80px_rgba(16,33,31,0.08)] border border-black/5">
+          <h2 className="text-xl font-semibold mb-4 text-[#10211f]">{editingId ? 'Editar Producto' : 'Crear Producto'}</h2>
           <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm text-gray-700 font-medium mb-1">Nombre</label>
-              <input type="text" required value={name} onChange={e => setName(e.target.value)} className="w-full p-2 border rounded" />
+              <label className="block text-sm text-[#5f6f6b] font-medium mb-1">Nombre</label>
+              <input type="text" required value={name} onChange={e => setName(e.target.value)} className="w-full p-3 border border-black/10 bg-white text-[#10211f] rounded-xl" />
             </div>
             
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm text-gray-700 font-medium mb-1">Precio ($)</label>
-                <input type="number" required min="0" step="0.01" value={price} onChange={e => setPrice(Number(e.target.value))} className="w-full p-2 border rounded" />
+                <label className="block text-sm text-[#5f6f6b] font-medium mb-1">Precio ($)</label>
+                <input type="number" required min="0" step="0.01" value={price} onChange={e => setPrice(Number(e.target.value))} className="w-full p-3 border border-black/10 bg-white text-[#10211f] rounded-xl" />
               </div>
               <div>
-                <label className="block text-sm text-gray-700 font-medium mb-1">Stock</label>
-                <input type="number" required min="0" value={stock} onChange={e => setStock(Number(e.target.value))} className="w-full p-2 border rounded" />
+                <label className="block text-sm text-[#5f6f6b] font-medium mb-1">Stock</label>
+                <input type="number" required min="0" value={stock} onChange={e => setStock(Number(e.target.value))} className="w-full p-3 border border-black/10 bg-white text-[#10211f] rounded-xl" />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm text-gray-700 font-medium mb-1">Categoría</label>
-              <input type="text" value={category} onChange={e => setCategory(e.target.value)} className="w-full p-2 border rounded" />
+              <label className="block text-sm text-[#5f6f6b] font-medium mb-1">Categoría</label>
+              <input type="text" value={category} onChange={e => setCategory(e.target.value)} className="w-full p-3 border border-black/10 bg-white text-[#10211f] rounded-xl" />
             </div>
 
             <div>
-              <label className="block text-sm text-gray-700 font-medium mb-1">Imagen (URL o Archivo)</label>
+              <label className="block text-sm text-[#5f6f6b] font-medium mb-1">Imagen (URL o Archivo)</label>
               <input 
                 type="text" 
                 value={image} 
                 onChange={e => { setImage(e.target.value); setFile(null) }} 
                 placeholder="https://... (URL directa)" 
-                className="w-full p-2 border rounded mb-2 text-sm" 
+                className="w-full p-3 border border-black/10 bg-white text-[#10211f] rounded-xl mb-2 text-sm" 
               />
               <input 
                 type="file" 
@@ -189,27 +192,27 @@ const AdminProducts: React.FC = () => {
                     setImage('') // Si sube archivo, vaciamos la URL
                   }
                 }} 
-                className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" 
+                className="w-full text-sm text-[#5f6f6b] file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-[#3e6b5b] file:text-white hover:file:opacity-95"
               />
             </div>
 
             <div className="md:col-span-2">
-              <label className="block text-sm text-gray-700 font-medium mb-1">Descripción</label>
-              <textarea rows={3} value={description} onChange={e => setDescription(e.target.value)} className="w-full p-2 border rounded" />
+              <label className="block text-sm text-[#5f6f6b] font-medium mb-1">Descripción</label>
+              <textarea rows={3} value={description} onChange={e => setDescription(e.target.value)} className="w-full p-3 border border-black/10 bg-white text-[#10211f] rounded-xl" />
             </div>
 
             <div className="md:col-span-2 flex justify-end gap-3 mt-4">
               <button 
                 type="button" 
                 onClick={resetForm}
-                className="px-4 py-2 border rounded text-gray-600 hover:bg-gray-100 transition"
+                className="px-4 py-2 border border-black/10 rounded-xl text-[#10211f] hover:bg-black/5 transition"
               >
                 Cancelar
               </button>
               <button 
                 type="submit" 
                 disabled={uploadingImage}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition disabled:opacity-50"
+                className="px-4 py-2 bg-[#3e6b5b] text-white rounded-xl hover:opacity-95 transition disabled:opacity-50"
               >
                 {uploadingImage ? 'Subiendo imagen...' : editingId ? 'Actualizar' : 'Guardar'}
               </button>
@@ -217,42 +220,42 @@ const AdminProducts: React.FC = () => {
           </form>
         </div>
       ) : (
-        <div className="bg-white rounded-lg shadow overflow-hidden border border-gray-200">
+        <div className="bg-white/85 backdrop-blur rounded-[2rem] shadow-[0_20px_80px_rgba(16,33,31,0.08)] overflow-hidden border border-black/5">
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+            <table className="min-w-full divide-y divide-black/5 text-[#10211f]">
+            <thead className="bg-[#f5f7f5]">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Producto</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Precio</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoría</th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-[#5f6f6b] uppercase tracking-[0.2em]">Producto</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-[#5f6f6b] uppercase tracking-[0.2em]">Precio</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-[#5f6f6b] uppercase tracking-[0.2em]">Stock</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-[#5f6f6b] uppercase tracking-[0.2em]">Categoría</th>
+                <th className="px-6 py-3 text-right text-xs font-semibold text-[#5f6f6b] uppercase tracking-[0.2em]">Acciones</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-transparent divide-y divide-black/5">
               {loading ? (
-                <tr><td colSpan={5} className="px-6 py-4 text-center text-gray-500">Cargando...</td></tr>
+                <tr><td colSpan={5} className="px-6 py-4 text-center text-[#5f6f6b]">Cargando...</td></tr>
               ) : products.length === 0 ? (
-                <tr><td colSpan={5} className="px-6 py-4 text-center text-gray-500">No hay productos en la tienda.</td></tr>
+                <tr><td colSpan={5} className="px-6 py-4 text-center text-[#5f6f6b]">No hay productos en la tienda.</td></tr>
               ) : (
                 products.map(p => (
-                  <tr key={p.id} className="hover:bg-gray-50">
+                  <tr key={p.id} className="hover:bg-black/5">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        {p.image && <img src={p.image} alt="" className="h-10 w-10 rounded-full object-cover mr-3 bg-gray-100" />}
-                        <div className="text-sm font-medium text-gray-900">{p.name}</div>
+                        {p.image && <img src={p.image} alt="" className="h-10 w-10 rounded-full object-cover mr-3 bg-black/5" />}
+                        <div className="text-sm font-medium text-[#10211f]">{p.name}</div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${p.price}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{p.stock ?? 0} un.</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-[#5f6f6b]">${p.price}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-[#5f6f6b]">{p.stock ?? 0} un.</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-[#5f6f6b]">
+                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#eef3ef] text-[#3e6b5b] border border-black/5">
                         {p.category || 'Sin categoría'}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap right-0 text-right text-sm font-medium">
-                      <button onClick={() => handleEdit(p)} className="text-blue-600 hover:text-blue-900 mr-4">Editar</button>
-                      <button onClick={() => handleDelete(p.id)} className="text-red-600 hover:text-red-900">Borrar</button>
+                      <button onClick={() => handleEdit(p)} className="text-[#3e6b5b] hover:text-[#10211f] mr-4">Editar</button>
+                      <button onClick={() => handleDelete(p.id)} className="text-red-600 hover:text-red-700 font-medium">Borrar</button>
                     </td>
                   </tr>
                 ))

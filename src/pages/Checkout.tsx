@@ -49,12 +49,12 @@ const Checkout: React.FC = () => {
 
   if (items.length === 0) {
     return (
-      <div className="max-w-3xl mx-auto py-12 text-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">Finalizar Compra</h1>
-        <p className="text-gray-600 mb-8">Tu carrito está vacío. ¡Agrega productos para continuar!</p>
+      <div className="max-w-3xl mx-auto py-12 text-center bg-white/85 backdrop-blur rounded-[2rem] border border-black/5 px-6 shadow-[0_20px_80px_rgba(16,33,31,0.08)]">
+        <h1 className="text-3xl font-semibold text-[#10211f] mb-4">Finalizar Compra</h1>
+        <p className="text-[#5f6f6b] mb-8">Tu carrito está vacío. ¡Agrega productos para continuar!</p>
         <Link 
           to="/catalog"
-          className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-md shadow hover:bg-blue-700 transition"
+          className="px-6 py-3 bg-[#3e6b5b] text-white font-semibold rounded-xl shadow-lg shadow-[#3e6b5b]/10 hover:opacity-95 transition"
         >
           Volver al Catálogo
         </Link>
@@ -64,12 +64,12 @@ const Checkout: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto py-8">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">Finalizar Compra</h1>
+      <h1 className="text-3xl font-semibold text-[#10211f] mb-8">Finalizar Compra</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Resumen del pedido */}
-        <div className="bg-white p-6 rounded-lg shadow-sm border">
-          <h2 className="text-xl font-semibold border-b pb-4 mb-4">Resumen de tu pedido</h2>
+        <div className="bg-white/85 backdrop-blur p-6 rounded-[2rem] shadow-[0_20px_80px_rgba(16,33,31,0.08)] border border-black/5">
+          <h2 className="text-xl font-semibold border-b border-black/5 pb-4 mb-4 text-[#10211f]">Resumen de tu pedido</h2>
           <div className="space-y-4 mb-4 max-h-96 overflow-y-auto pr-2">
             {items.map(item => (
               <div key={item.product.id} className="flex justify-between items-center gap-4">
@@ -80,48 +80,48 @@ const Checkout: React.FC = () => {
                     className="w-12 h-12 object-cover rounded"
                   />
                   <div>
-                    <p className="font-medium text-sm text-gray-800">{item.product.name}</p>
-                    <p className="text-xs text-gray-500">Cant: {item.quantity}</p>
+                    <p className="font-medium text-sm text-[#10211f]">{item.product.name}</p>
+                    <p className="text-xs text-[#5f6f6b]">Cant: {item.quantity}</p>
                   </div>
                 </div>
-                <p className="font-semibold text-gray-900">${(item.product.price * item.quantity).toFixed(2)}</p>
+                <p className="font-semibold text-[#10211f]">${(item.product.price * item.quantity).toFixed(2)}</p>
               </div>
             ))}
           </div>
-          <div className="border-t pt-4">
+          <div className="border-t border-black/5 pt-4">
             <div className="flex justify-between items-center font-bold text-lg">
               <span>Total ({totalItems} productos)</span>
-              <span className="text-blue-600">${totalPrice.toFixed(2)}</span>
+              <span className="text-[#3e6b5b]">${totalPrice.toFixed(2)}</span>
             </div>
           </div>
         </div>
 
         {/* Datos de envío y pago (Simulación) */}
-        <div className="bg-white p-6 rounded-lg shadow-sm border flex flex-col justify-between">
+        <div className="bg-white/85 backdrop-blur p-6 rounded-[2rem] shadow-[0_20px_80px_rgba(16,33,31,0.08)] border border-black/5 flex flex-col justify-between">
           <div>
-            <h2 className="text-xl font-semibold border-b pb-4 mb-4">Tus Datos</h2>
+            <h2 className="text-xl font-semibold border-b border-black/5 pb-4 mb-4 text-[#10211f]">Tus Datos</h2>
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label>
+              <label className="block text-sm font-medium text-[#5f6f6b] mb-1">Correo Electrónico</label>
               <input 
                 type="text" 
                 disabled 
                 value={user?.email || ''} 
-                className="w-full p-2 border bg-gray-50 rounded text-gray-500 cursor-not-allowed"
+                className="w-full p-3 border border-black/5 bg-[#f5f7f5] rounded-xl text-[#10211f]/60 cursor-not-allowed"
               />
-              <p className="text-xs text-gray-500 mt-1">Sesión iniciada correctamente.</p>
+              <p className="text-xs text-[#5f6f6b] mt-1">Sesión iniciada correctamente.</p>
             </div>
           </div>
           
           <button 
             onClick={handleSimulatePayment}
             disabled={isProcessing}
-            className={`w-full mt-8 text-white font-bold py-3 rounded-lg transition shadow-sm ${
-              isProcessing ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'
+            className={`w-full mt-8 text-white font-semibold py-3 rounded-2xl transition shadow-sm ${
+              isProcessing ? 'bg-[#9fb2ab] cursor-not-allowed text-white/80' : 'bg-[#3e6b5b] hover:opacity-95'
             }`}
           >
             {isProcessing ? 'Procesando pago...' : `Confirmar y Pagar $${totalPrice.toFixed(2)}`}
           </button>
-          {error && <p className="text-red-500 text-sm mt-3 font-semibold">{error}</p>}
+          {error && <p className="text-[#3e6b5b] text-sm mt-3 font-semibold">{error}</p>}
         </div>
       </div>
     </div>

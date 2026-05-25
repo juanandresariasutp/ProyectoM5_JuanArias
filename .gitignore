@@ -24,10 +24,12 @@ dist-ssr
 *.sw?
 
 
-.Presentación de PI M5 front.pdf
-.PlanProyecto.md
-.PlanIA.md
+Presentación de PI M5 front.pdf
+PlanProyecto.md
+PlanIA.md
+
 .env
 
 .vercel
 Sustentacion.md
+Diseño.md

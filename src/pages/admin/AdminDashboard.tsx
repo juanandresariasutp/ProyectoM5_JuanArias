@@ -50,49 +50,52 @@ const AdminDashboard: React.FC = () => {
   }, [])
 
   if (loading) {
-    return <div className="p-8 text-center text-gray-500">Cargando métricas...</div>
+    return <div className="p-8 text-center text-[#10211f]">Cargando métricas...</div>
   }
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">Dashboard</h1>
-      <p className="text-gray-600">Bienvenido al panel de control. Aquí tienes un resumen operativo.</p>
+      <div>
+        <p className="text-xs uppercase tracking-[0.35em] text-[#3e6b5b] mb-2">Creati Store</p>
+        <h1 className="text-2xl sm:text-3xl font-semibold text-[#10211f]">Dashboard</h1>
+      </div>
+      <p className="text-[#5f6f6b]">Bienvenido al panel de control. Aquí tienes un resumen operativo.</p>
 
       {/* Grid mobile first: 1 columna en móvil, 2 en tablets, 3 en desktop */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-4">
         
         {/* Tarjeta Revenue */}
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between">
+        <div className="bg-white/85 p-6 rounded-[2rem] shadow-[0_20px_80px_rgba(16,33,31,0.08)] border border-black/5 flex flex-col justify-between">
           <div>
-            <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Ingresos Totales</h3>
-            <p className="mt-2 text-3xl font-extrabold text-green-600">${metrics.totalRevenue.toFixed(2)}</p>
+            <h3 className="text-sm font-semibold text-[#3e6b5b] uppercase tracking-[0.2em]">Ingresos Totales</h3>
+            <p className="mt-2 text-3xl font-semibold text-[#10211f]">${metrics.totalRevenue.toFixed(2)}</p>
           </div>
-          <div className="mt-4 text-xs text-gray-400">Excluye órdenes canceladas</div>
+          <div className="mt-4 text-xs text-[#5f6f6b]">Excluye órdenes canceladas</div>
         </div>
 
         {/* Tarjeta Órdenes */}
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between">
+        <div className="bg-white/85 p-6 rounded-[2rem] shadow-[0_20px_80px_rgba(16,33,31,0.08)] border border-black/5 flex flex-col justify-between">
           <div>
-            <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Órdenes Totales</h3>
-            <p className="mt-2 text-3xl font-extrabold text-blue-600">{metrics.totalOrders}</p>
+            <h3 className="text-sm font-semibold text-[#3e6b5b] uppercase tracking-[0.2em]">Órdenes Totales</h3>
+            <p className="mt-2 text-3xl font-semibold text-[#10211f]">{metrics.totalOrders}</p>
           </div>
           <div className="mt-4 flex items-center justify-between">
-            <span className="text-sm font-medium text-orange-500">{metrics.pendingOrders} pendientes</span>
-            <Link to="/admin/orders" className="text-sm text-blue-500 hover:text-blue-700 font-semibold">Ver todas &rarr;</Link>
+            <span className="text-sm font-medium text-[#3e6b5b]">{metrics.pendingOrders} pendientes</span>
+            <Link to="/admin/orders" className="text-sm text-[#10211f] hover:text-[#3e6b5b] font-semibold">Ver todas &rarr;</Link>
           </div>
         </div>
 
         {/* Tarjeta Productos */}
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between">
+        <div className="bg-white/85 p-6 rounded-[2rem] shadow-[0_20px_80px_rgba(16,33,31,0.08)] border border-black/5 flex flex-col justify-between">
           <div>
-            <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Productos en Catálogo</h3>
-            <p className="mt-2 text-3xl font-extrabold text-purple-600">{metrics.totalProducts}</p>
+            <h3 className="text-sm font-semibold text-[#3e6b5b] uppercase tracking-[0.2em]">Productos en Catálogo</h3>
+            <p className="mt-2 text-3xl font-semibold text-[#10211f]">{metrics.totalProducts}</p>
           </div>
           <div className="mt-4 flex items-center justify-between">
-            <span className={`text-sm font-medium ${metrics.lowStockCount > 0 ? 'text-red-500' : 'text-gray-500'}`}>
+            <span className={`text-sm font-medium ${metrics.lowStockCount > 0 ? 'text-[#3e6b5b]' : 'text-[#5f6f6b]'}`}>
               {metrics.lowStockCount} con stock crítico
             </span>
-            <Link to="/admin/products" className="text-sm text-purple-500 hover:text-purple-700 font-semibold">Gestionar &rarr;</Link>
+            <Link to="/admin/products" className="text-sm text-[#10211f] hover:text-[#3e6b5b] font-semibold">Gestionar &rarr;</Link>
           </div>
         </div>
 
