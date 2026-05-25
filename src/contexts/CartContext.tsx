@@ -11,7 +11,7 @@ type CartState = {
 }
 
 type CartAction =
-  | { type: 'ADD_ITEM'; payload: Product }
+  | { type: 'ADD_ITEM'; payload: { product: Product, quantity?: number } }
   | { type: 'REMOVE_ITEM'; payload: { productId: string } }
   | { type: 'UPDATE_QUANTITY'; payload: { productId: string; quantity: number } }
   | { type: 'CLEAR_CART' }
@@ -23,20 +23,23 @@ const initialState: CartState = {
 function cartReducer(state: CartState, action: CartAction): CartState {
   switch (action.type) {
     case 'ADD_ITEM': {
-      const existingIndex = state.items.findIndex(item => item.product.id === action.payload.id)
-      const stock = typeof action.payload.stock === 'number' ? action.payload.stock : Infinity
+      const existingIndex = state.items.findIndex(item => item.product.id === action.payload.product.id)
+      const stock = typeof action.payload.product.stock === 'number' ? action.payload.product.stock : Infinity
+      const qtyToAdd = action.payload.quantity ?? 1
+      
       if (existingIndex >= 0) {
         const newItems = [...state.items]
         const current = newItems[existingIndex]
-        // No superar el stock disponible
         if (current.quantity < stock) {
-          newItems[existingIndex] = { ...current, quantity: current.quantity + 1 }
+          const finalQty = Math.min(stock, current.quantity + qtyToAdd)
+          newItems[existingIndex] = { ...current, quantity: finalQty }
         }
         return { ...state, items: newItems }
       }
-      // Si el stock es 0, no agregamos el producto
-      if (stock <= 0) return state
-      return { ...state, items: [...state.items, { product: action.payload, quantity: 1 }] }
+      
+      if (stock <= 0 || qtyToAdd <= 0) return state
+      const finalQty = Math.min(stock, qtyToAdd)
+      return { ...state, items: [...state.items, { product: action.payload.product, quantity: finalQty }] }
     }
     case 'REMOVE_ITEM': {
       return {
@@ -66,7 +69,7 @@ function cartReducer(state: CartState, action: CartAction): CartState {
 
 type CartContextType = {
   items: CartItem[]
-  addItem: (product: Product) => void
+  addItem: (product: Product, quantity?: number) => void
   removeItem: (productId: string) => void
   updateQuantity: (productId: string, quantity: number) => void
   clearCart: () => void
@@ -98,7 +101,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.setItem('cart_v1', JSON.stringify(state))
   }, [state])
 
-  const addItem = (product: Product) => dispatch({ type: 'ADD_ITEM', payload: product })
+  const addItem = (product: Product, quantity?: number) => dispatch({ type: 'ADD_ITEM', payload: { product, quantity } })
   const removeItem = (productId: string) => dispatch({ type: 'REMOVE_ITEM', payload: { productId } })
   const updateQuantity = (productId: string, quantity: number) => dispatch({ type: 'UPDATE_QUANTITY', payload: { productId, quantity } })
   const clearCart = () => dispatch({ type: 'CLEAR_CART' })
