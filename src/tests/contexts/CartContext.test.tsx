@@ -1,9 +1,9 @@
 import { renderHook, act } from '@testing-library/react'
 import { describe, it, expect, beforeEach } from 'vitest'
-import { CartProvider } from '../providers'
-import { useCart } from '../hooks/useCart'
-import type { Product } from '../types/product'
 import React from 'react'
+import { CartProvider } from '../../providers'
+import { useCart } from '../../hooks/useCart'
+import type { Product } from '../../types/product'
 
 const mockProduct: Product = {
   id: 'p1',
