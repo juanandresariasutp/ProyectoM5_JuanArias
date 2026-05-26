@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { useCart } from '../contexts/CartContext'
-import { useAuth } from '../contexts/AuthContext'
+import { useCart } from '../hooks/useCart'
+import { useAuth } from '../hooks/useAuth'
 import { Link, useNavigate } from 'react-router-dom'
 import { createOrder } from '../services/orders'
 import { formatCurrency } from '../utils/format'

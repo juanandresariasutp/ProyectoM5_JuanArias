@@ -1,5 +1,5 @@
 import React from 'react'
-import { useCart } from '../contexts/CartContext'
+import { useCart } from '../hooks/useCart'
 import { formatCurrency } from '../utils/format'
 import { Link } from 'react-router-dom'
 

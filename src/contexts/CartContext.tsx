@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useReducer, useState } from 'react'
+import React, { createContext, useEffect, useReducer, useState } from 'react'
 import type { Product } from '../types/product'
 
 export type CartItem = {
@@ -67,7 +67,7 @@ function cartReducer(state: CartState, action: CartAction): CartState {
   }
 }
 
-type CartContextType = {
+export type CartContextType = {
   items: CartItem[]
   addItem: (product: Product, quantity?: number) => void
   removeItem: (productId: string) => void
@@ -80,7 +80,7 @@ type CartContextType = {
   closeCart: () => void
 }
 
-const CartContext = createContext<CartContextType | undefined>(undefined)
+export const CartContext = createContext<CartContextType | undefined>(undefined)
 
 // Función para cargar estado inicial desde localStorage
 const initCart = (): CartState => {
@@ -130,10 +130,3 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   )
 }
 
-export function useCart() {
-  const context = useContext(CartContext)
-  if (context === undefined) {
-    throw new Error('useCart debe ser usado dentro de un CartProvider')
-  }
-  return context
-}

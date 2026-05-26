@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { getProductById } from '../services/products'
-import { useCart } from '../contexts/CartContext'
+import { useCart } from '../hooks/useCart'
 import type { Product } from '../types/product'
 
 const ProductDetail: React.FC = () => {

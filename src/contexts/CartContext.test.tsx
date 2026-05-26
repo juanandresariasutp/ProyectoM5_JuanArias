@@ -1,6 +1,7 @@
 import { renderHook, act } from '@testing-library/react'
 import { describe, it, expect, beforeEach } from 'vitest'
-import { CartProvider, useCart } from './CartContext'
+import { CartProvider } from './CartContext'
+import { useCart } from '../hooks/useCart'
 import type { Product } from '../types/product'
 import React from 'react'
 

@@ -5,7 +5,7 @@ import { CartProvider } from '../../contexts/CartContext'
 import { MemoryRouter } from 'react-router-dom'
 import { AuthProvider } from '../../contexts/AuthContext'
 import Cart from '../../pages/Cart'
-import { useCart } from '../../contexts/CartContext'
+import { useCart } from '../../hooks/useCart'
 import type { Product } from '../../types/product'
 
 // Un componente wrapper genérico para envolver todas las pruebas
@@ -70,16 +70,22 @@ describe('Flujo de Integración del Carrito', () => {
     // Verificamos que el carrito muestre el producto y el total
     expect(screen.getByText('Producto de Integración')).toBeInTheDocument()
     
-    // El subtotal y total aparecerá como $100.00 porque son 2 a 50$ cada uno
-    const totals100 = screen.getAllByText('$100.00')
+    // El subtotal/total puede renderizarse con punto o coma según locale
+    const totals100 = screen.getAllByText((_, element) => {
+      const text = element?.textContent?.replace(/\s/g, '') ?? ''
+      return text.includes('$100.00') || text.includes('$100,00')
+    })
     expect(totals100.length).toBeGreaterThan(0)
 
     // Cambiamos la cantidad desde el carrito (botón '+' para incrementar)
     const incrementBtn = screen.getByText('+')
     fireEvent.click(incrementBtn)
 
-    // Ahora son 3 productos, el total debe ser $150.00
-    const totals150 = screen.getAllByText('$150.00')
+    // Ahora son 3 productos, el total debe ser 150 (con punto o coma según locale)
+    const totals150 = screen.getAllByText((_, element) => {
+      const text = element?.textContent?.replace(/\s/g, '') ?? ''
+      return text.includes('$150.00') || text.includes('$150,00')
+    })
     expect(totals150.length).toBeGreaterThan(0)
 
     // Lo eliminamos o lo vaciamos

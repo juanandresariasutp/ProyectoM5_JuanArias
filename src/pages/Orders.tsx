@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useAuth } from '../contexts/AuthContext'
+import { useAuth } from '../hooks/useAuth'
 import { getUserOrders } from '../services/orders'
 import { formatCurrency } from '../utils/format'
 import type { Order } from '../types/order'
