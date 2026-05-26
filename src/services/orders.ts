@@ -2,6 +2,12 @@ import { collection, doc, writeBatch, serverTimestamp, increment, query, where, 
 import { db } from '../lib/firebase'
 import type { Order } from '../types/order'
 
+type ProductStockDocument = {
+  stock?: number
+}
+
+type OrderDocument = Omit<Order, 'id'>
+
 export const createOrder = async (orderData: Omit<Order, 'id' | 'createdAt'>): Promise<string> => {
   try {
     // 0. Verificamos stock actual para cada producto antes de crear la orden
@@ -10,7 +16,7 @@ export const createOrder = async (orderData: Omit<Order, 'id' | 'createdAt'>): P
     for (const item of orderData.items) {
       const productRef = doc(db, 'products', item.product.id)
       const snap = await getDoc(productRef)
-      const currentStock = snap.exists() ? (snap.data() as any).stock ?? Infinity : Infinity
+      const currentStock = snap.exists() ? (snap.data() as ProductStockDocument).stock ?? Infinity : Infinity
       if (currentStock < item.quantity) {
         insufficient.push(`${item.product.name} (disponible: ${currentStock}, solicitado: ${item.quantity})`)
       }
@@ -59,7 +65,7 @@ export const getUserOrders = async (userId: string): Promise<Order[]> => {
     
     const orders = snapshot.docs.map(doc => ({
       id: doc.id,
-      ...doc.data()
+      ...(doc.data() as OrderDocument)
     })) as Order[]
 
     // Ordenamos localmente por fecha de creación (de más nueva a más vieja)
@@ -81,7 +87,7 @@ export const getAllOrders = async (): Promise<Order[]> => {
     
     const orders = snapshot.docs.map(doc => ({
       id: doc.id,
-      ...doc.data()
+      ...(doc.data() as OrderDocument)
     })) as Order[]
 
     return orders.sort((a, b) => {

@@ -73,7 +73,7 @@ const initCart = (): CartState => {
 	try {
 		const localData = localStorage.getItem('cart_v1')
 		return localData ? JSON.parse(localData) : initialState
-	} catch (error) {
+	} catch {
 		return initialState
 	}
 }

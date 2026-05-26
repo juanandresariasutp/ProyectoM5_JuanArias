@@ -12,6 +12,11 @@ import type { User } from 'firebase/auth'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { AuthContext } from '../contexts/AuthContext'
 
+type UserDocument = {
+	role?: string
+	email?: string | null
+}
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	const [user, setUser] = useState<User | null>(null)
 	const [role, setRole] = useState<string | null>(null)
@@ -24,7 +29,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 				const ref = doc(db, 'users', u.uid)
 				const snap = await getDoc(ref)
 				if (snap.exists()) {
-					const data = snap.data() as any
+					const data = snap.data() as UserDocument
 					setRole(data.role ?? 'customer')
 				} else {
 					await setDoc(ref, { role: 'customer', email: u.email })

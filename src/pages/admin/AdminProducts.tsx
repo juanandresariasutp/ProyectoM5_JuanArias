@@ -21,7 +21,6 @@ const AdminProducts: React.FC = () => {
   const [uploadingImage, setUploadingImage] = useState(false)
 
   const loadProducts = async () => {
-    setLoading(true)
     try {
       const data = await fetchProducts()
       setProducts(data)
@@ -33,7 +32,28 @@ const AdminProducts: React.FC = () => {
   }
 
   useEffect(() => {
-    loadProducts()
+    let active = true
+
+    const initialLoad = async () => {
+      try {
+        const data = await fetchProducts()
+        if (active) {
+          setProducts(data)
+        }
+      } catch (error) {
+        console.error('Error loading products', error)
+      } finally {
+        if (active) {
+          setLoading(false)
+        }
+      }
+    }
+
+    void initialLoad()
+
+    return () => {
+      active = false
+    }
   }, [])
 
   const resetForm = () => {

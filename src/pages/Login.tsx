@@ -1,6 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import { useAuth } from '../hooks/useAuth'
 import { useLocation, useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
+import { useAuth } from '../hooks/useAuth'
+
+type LoginLocationState = {
+  from?: {
+    pathname?: string
+  }
+}
+
+type FirebaseAuthError = {
+  code?: string
+}
 
 const EyeIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
@@ -26,7 +36,8 @@ const GoogleIcon = () => (
 )
 
 const Login: React.FC = () => {
-  const [isRegistering, setIsRegistering] = useState(false)
+  const location = useLocation()
+  const [isRegistering, setIsRegistering] = useState(() => new URLSearchParams(location.search).get('mode') === 'register')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -37,21 +48,16 @@ const Login: React.FC = () => {
   
   const { login, register, loginWithGoogle } = useAuth()
   const navigate = useNavigate()
-  const location = useLocation()
-  const from = (location.state as any)?.from?.pathname || '/'
-
-  useEffect(() => {
-    const params = new URLSearchParams(location.search)
-    setIsRegistering(params.get('mode') === 'register')
-  }, [location.search])
+  const from = (location.state as LoginLocationState | null)?.from?.pathname || '/'
 
   const handleGoogleLogin = async () => {
     setError(null)
     try {
       await loginWithGoogle()
       navigate(from, { replace: true })
-    } catch (err: any) {
-      if (err.code === 'auth/popup-closed-by-user') {
+    } catch (error: unknown) {
+      const authError = error as FirebaseAuthError
+      if (authError.code === 'auth/popup-closed-by-user') {
         setError('Cancelaste el inicio de sesión con Google.')
       } else {
         setError('Ocurrió un error al iniciar sesión con Google.')
@@ -78,12 +84,13 @@ const Login: React.FC = () => {
         await login(email, password)
         navigate(from, { replace: true })
       }
-    } catch (err: any) {
-      if (err.code === 'auth/email-already-in-use') {
+    } catch (error: unknown) {
+      const authError = error as FirebaseAuthError
+      if (authError.code === 'auth/email-already-in-use') {
         setError('Este correo ya está registrado.')
-      } else if (err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') {
+      } else if (authError.code === 'auth/wrong-password' || authError.code === 'auth/user-not-found' || authError.code === 'auth/invalid-credential') {
         setError('Correo o contraseña incorrectos.')
-      } else if (err.code === 'auth/weak-password') {
+      } else if (authError.code === 'auth/weak-password') {
         setError('La contraseña debe tener al menos 6 caracteres.')
       } else {
         setError('Ocurrió un error. Inténtalo de nuevo.')

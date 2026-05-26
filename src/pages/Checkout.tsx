@@ -4,6 +4,7 @@ import { useAuth } from '../hooks/useAuth'
 import { Link, useNavigate } from 'react-router-dom'
 import { createOrder } from '../services/orders'
 import { formatCurrency } from '../utils/format'
+import type { CartItem } from '../contexts/CartContext'
 
 const Checkout: React.FC = () => {
   const { items, totalPrice, totalItems, clearCart } = useCart()
@@ -90,7 +91,7 @@ const Checkout: React.FC = () => {
         <div className="bg-white/85 backdrop-blur p-6 rounded-[2rem] shadow-[0_20px_80px_rgba(16,33,31,0.08)] border border-black/5">
           <h2 className="text-xl font-semibold border-b border-black/5 pb-4 mb-4 text-[#10211f]">Resumen de tu pedido</h2>
           <div className="space-y-4 mb-4 max-h-96 overflow-y-auto pr-2">
-            {items.map(item => (
+            {items.map((item: CartItem) => (
               <div key={item.product.id} className="flex justify-between items-center gap-4">
                 <div className="flex items-center gap-3">
                   <img 

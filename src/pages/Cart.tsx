@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useCart } from '../hooks/useCart'
 import { formatCurrency } from '../utils/format'
+import type { CartItem } from '../contexts/CartContext'
 
 const Cart: React.FC = () => {
   const { items, removeItem, updateQuantity, totalPrice, totalItems, clearCart } = useCart()
@@ -37,7 +38,7 @@ const Cart: React.FC = () => {
           </div>
 
           <div className="divide-y divide-black/5">
-            {items.map(item => (
+            {items.map((item: CartItem) => (
               <div key={item.product.id} className="grid grid-cols-1 sm:grid-cols-12 gap-4 p-4 sm:p-6 items-center">
                 {/* Producto Info */}
                 <div className="col-span-1 sm:col-span-6 flex items-center gap-4">

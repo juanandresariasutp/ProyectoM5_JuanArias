@@ -1,3 +1,5 @@
+import type { Timestamp } from 'firebase/firestore'
+
 export type Product = {
   id: string
   name: string
@@ -6,5 +8,5 @@ export type Product = {
   category?: string
   image?: string
   stock?: number
-  createdAt?: any
+  createdAt?: Timestamp | null
 }

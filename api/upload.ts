@@ -1,14 +1,27 @@
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
-export default async function handler(req: any, res: any) {
+type UploadRequest = {
+  method?: string
+  body?: {
+    filename?: string
+    fileType?: string
+  }
+}
+
+type UploadResponse = {
+  status: (code: number) => UploadResponse
+  json: (body: unknown) => void
+}
+
+export default async function handler(req: UploadRequest, res: UploadResponse) {
   // Solo permitimos peticiones POST
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
 
   try {
-    const { filename, fileType } = req.body;
+    const { filename, fileType } = req.body ?? {};
 
     if (!filename || !fileType) {
       return res.status(400).json({ message: 'Falta filename o fileType' });

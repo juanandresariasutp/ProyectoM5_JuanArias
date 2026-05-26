@@ -8,7 +8,6 @@ const AdminOrders: React.FC = () => {
   const [loading, setLoading] = useState(true)
 
   const loadOrders = async () => {
-    setLoading(true)
     try {
       const data = await getAllOrders()
       setOrders(data)
@@ -20,14 +19,36 @@ const AdminOrders: React.FC = () => {
   }
 
   useEffect(() => {
-    loadOrders()
+    let active = true
+
+    const initialLoad = async () => {
+      try {
+        const data = await getAllOrders()
+        if (active) {
+          setOrders(data)
+        }
+      } catch (error) {
+        console.error('Error cargando órdenes', error)
+      } finally {
+        if (active) {
+          setLoading(false)
+        }
+      }
+    }
+
+    void initialLoad()
+
+    return () => {
+      active = false
+    }
   }, [])
 
   const handleStatusChange = async (orderId: string, newStatus: Order['status']) => {
     try {
       await updateOrderStatus(orderId, newStatus)
+      setLoading(true)
       await loadOrders() // recargar para mostrar el estado actualizado
-    } catch (error) {
+    } catch {
       alert('Error actualizando la orden')
     }
   }

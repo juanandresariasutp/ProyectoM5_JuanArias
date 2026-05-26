@@ -2,6 +2,7 @@ import React from 'react'
 import { useCart } from '../hooks/useCart'
 import { formatCurrency } from '../utils/format'
 import { Link } from 'react-router-dom'
+import type { CartItem } from '../contexts/CartContext'
 
 const CartDrawer: React.FC = () => {
   const { isCartOpen, closeCart, items, removeItem, updateQuantity, totalPrice, totalItems } = useCart()
@@ -32,7 +33,7 @@ const CartDrawer: React.FC = () => {
               <p>Tu carrito está vacío.</p>
             </div>
           ) : (
-            items.map(item => (
+            items.map((item: CartItem) => (
               <div key={item.product.id} className="flex gap-4 border-b border-black/5 pb-4">
                 <img 
                   src={item.product.image || 'https://placehold.co/100x100/png'} 

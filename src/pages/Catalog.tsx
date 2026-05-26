@@ -4,6 +4,7 @@ import { formatCurrency } from '../utils/format'
 import { fetchProducts } from '../services/products'
 import { useCart } from '../hooks/useCart'
 import type { Product } from '../types/product'
+import type { CartItem } from '../contexts/CartContext'
 
 const Catalog: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([])
@@ -144,7 +145,7 @@ const Catalog: React.FC = () => {
               
                 <div className="mt-auto border-t border-black/5 pt-4">
                 {(() => {
-                  const cartQuantity = items.find(item => item.product.id === prod.id)?.quantity ?? 0
+                  const cartQuantity = items.find((item: CartItem) => item.product.id === prod.id)?.quantity ?? 0
                   const stockValue = typeof prod.stock === 'number' ? prod.stock : Infinity
                   const stockRemaining = stockValue === Infinity ? Infinity : Math.max(stockValue - cartQuantity, 0)
                   const limitReached = stockValue !== Infinity && stockRemaining <= 0
