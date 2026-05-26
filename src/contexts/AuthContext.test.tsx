@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react'
 import { describe, it, expect, vi } from 'vitest'
-import { AuthProvider } from './AuthContext'
+import { AuthProvider } from '../providers'
 import { useAuth } from '../hooks/useAuth'
 import React from 'react'
 
