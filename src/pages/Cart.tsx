@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useCart } from '../hooks/useCart'
 import { formatCurrency } from '../utils/format'
 import type { CartItem } from '../contexts/CartContext'
+import CartItemRow from '../components/CartItemRow'
 
 const Cart: React.FC = () => {
   const { items, removeItem, updateQuantity, totalPrice, totalItems, clearCart } = useCart()
@@ -39,64 +40,14 @@ const Cart: React.FC = () => {
 
           <div className="divide-y divide-black/5">
             {items.map((item: CartItem) => (
-              <div key={item.product.id} className="grid grid-cols-1 sm:grid-cols-12 gap-4 p-4 sm:p-6 items-center">
-                {/* Producto Info */}
-                <div className="col-span-1 sm:col-span-6 flex items-center gap-4">
-                  <Link to={`/product/${item.product.id}`} className="shrink-0 flex-none">
-                    <img 
-                      src={item.product.image || 'https://placehold.co/100x100/png'} 
-                      alt={item.product.name}
-                      className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-2xl border border-black/5 shadow-sm"
-                    />
-                  </Link>
-                  <div className="flex flex-col justify-center">
-                    <Link to={`/product/${item.product.id}`} className="font-semibold text-[#10211f] text-lg hover:text-[#3e6b5b] transition-colors">
-                      {item.product.name}
-                    </Link>
-                    <p className="text-[#5f6f6b] font-medium text-sm mt-1">
-                      Precio und: <span className="text-[#3e6b5b]">$ {formatCurrency(item.product.price, 0)}</span>
-                    </p>
-                    <button 
-                      onClick={() => removeItem(item.product.id)}
-                      className="text-red-600 hover:text-red-700 text-sm font-medium text-left mt-2 underline decoration-red-300 underline-offset-4"
-                    >
-                      Quitar producto
-                    </button>
-                  </div>
-                </div>
-
-                {/* Cantidad Selector */}
-                <div className="col-span-1 sm:col-span-3 flex sm:justify-center items-center mt-4 sm:mt-0">
-                  <span className="sm:hidden font-medium text-[#5f6f6b] mr-4">Cantidad:</span>
-                  <div className="flex items-center border border-black/5 rounded-xl bg-white overflow-hidden">
-                    <button 
-                      onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
-                      className="px-3 py-1 text-[#10211f] hover:bg-black/5 disabled:opacity-40 transition-colors"
-                      disabled={item.quantity <= 1}
-                    >
-                      -
-                    </button>
-                    <span className="px-3 py-1 font-medium border-x border-black/5 min-w-[2.5rem] text-center text-[#10211f]">
-                      {item.quantity}
-                    </span>
-                    <button 
-                      onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                      className="px-3 py-1 text-[#10211f] hover:bg-black/5 disabled:opacity-40 transition-colors"
-                      disabled={typeof item.product.stock === 'number' && item.quantity >= (item.product.stock as number)}
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-
-                {/* Subtotal Item */}
-                <div className="col-span-1 sm:col-span-3 flex justify-between sm:justify-end items-center mt-2 sm:mt-0">
-                  <span className="sm:hidden font-medium text-[#5f6f6b]">Subtotal:</span>
-                  <span className="font-semibold text-xl text-[#10211f] border-b-2 border-transparent">
-                    $ {formatCurrency(item.product.price * item.quantity, 2)}
-                  </span>
-                </div>
-              </div>
+              <CartItemRow
+                key={item.product.id}
+                item={item}
+                editable
+                onRemove={removeItem}
+                onDecrease={(productId, currentQuantity) => updateQuantity(productId, currentQuantity - 1)}
+                onIncrease={(productId, currentQuantity) => updateQuantity(productId, currentQuantity + 1)}
+              />
             ))}
           </div>
           

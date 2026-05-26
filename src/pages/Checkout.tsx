@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { createOrder } from '../services/orders'
 import { formatCurrency } from '../utils/format'
 import type { CartItem } from '../contexts/CartContext'
+import CartItemRow from '../components/CartItemRow'
 
 const Checkout: React.FC = () => {
   const { items, totalPrice, totalItems, clearCart } = useCart()
@@ -92,20 +93,7 @@ const Checkout: React.FC = () => {
           <h2 className="text-xl font-semibold border-b border-black/5 pb-4 mb-4 text-[#10211f]">Resumen de tu pedido</h2>
           <div className="space-y-4 mb-4 max-h-96 overflow-y-auto pr-2">
             {items.map((item: CartItem) => (
-              <div key={item.product.id} className="flex justify-between items-center gap-4">
-                <div className="flex items-center gap-3">
-                  <img 
-                    src={item.product.image || 'https://placehold.co/50x50/png'} 
-                    alt={item.product.name}
-                    className="w-12 h-12 object-cover rounded"
-                  />
-                  <div>
-                    <p className="font-medium text-sm text-[#10211f]">{item.product.name}</p>
-                    <p className="text-xs text-[#5f6f6b]">Cant: {item.quantity}</p>
-                  </div>
-                </div>
-                <p className="font-semibold text-[#10211f]">$ {formatCurrency(item.product.price * item.quantity, 2)}</p>
-              </div>
+              <CartItemRow key={item.product.id} item={item} />
             ))}
           </div>
           <div className="border-t border-black/5 pt-4">

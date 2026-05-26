@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import type { Product } from '../../types/product'
-import { formatCurrency } from '../../utils/format'
 import { fetchProducts, createProduct, updateProduct, deleteProduct } from '../../services/products'
+import AdminProductRow from '../../components/admin/AdminProductRow'
+import AdminProductMobileCard from '../../components/admin/AdminProductMobileCard'
 
 const AdminProducts: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([])
@@ -261,37 +262,7 @@ const AdminProducts: React.FC = () => {
                 <tr><td colSpan={5} className="px-6 py-4 text-center text-[#5f6f6b]">No hay productos en la tienda.</td></tr>
               ) : (
                 products.map(p => (
-                  <tr key={p.id} className="hover:bg-black/5">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        {p.image && <img src={p.image} alt="" className="h-10 w-10 rounded-full object-cover mr-3 bg-black/5" />}
-                        <div className="text-sm font-medium text-[#10211f]">{p.name}</div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-[#5f6f6b]">$ {formatCurrency(p.price, 0)}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-[#5f6f6b]">{p.stock ?? 0} un.</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-[#5f6f6b]">
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#eef3ef] text-[#3e6b5b] border border-black/5">
-                        {p.category || 'Sin categoría'}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap right-0 text-right text-sm font-medium">
-                      <button
-                        onClick={() => handleEdit(p)}
-                        className="inline-flex items-center px-3 py-1 rounded-md bg-[#eef3ef] text-[#3e6b5b] hover:bg-[#e1ede6] mr-3 font-medium transition"
-                        aria-label={`Editar ${p.name}`}
-                      >
-                        Editar
-                      </button>
-                      <button
-                        onClick={() => handleDelete(p.id)}
-                        className="inline-flex items-center px-3 py-1 rounded-md bg-red-50 text-red-600 hover:bg-red-100 font-medium transition"
-                        aria-label={`Borrar ${p.name}`}
-                      >
-                        Borrar
-                      </button>
-                    </td>
-                  </tr>
+                  <AdminProductRow key={p.id} product={p} onEdit={handleEdit} onDelete={handleDelete} />
                 ))
               )}
             </tbody>
@@ -307,23 +278,7 @@ const AdminProducts: React.FC = () => {
             ) : (
               <div className="flex flex-col gap-3">
                 {products.map(p => (
-                  <div key={p.id} className="bg-white rounded-xl p-3 shadow-sm border border-black/5 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      {p.image && <img src={p.image} alt="" className="h-12 w-12 rounded-full object-cover bg-black/5" />}
-                      <div>
-                        <div className="text-sm font-medium text-[#10211f]">{p.name}</div>
-                        <div className="text-xs text-[#5f6f6b]">{p.category || 'Sin categoría'}</div>
-                      </div>
-                    </div>
-                    <div className="flex flex-col items-end gap-1">
-                      <div className="text-sm text-[#5f6f6b]">$ {formatCurrency(p.price, 0)}</div>
-                      <div className="text-xs text-[#5f6f6b]">{p.stock ?? 0} un.</div>
-                      <div className="flex gap-2 mt-2">
-                        <button onClick={() => handleEdit(p)} className="px-3 py-1 rounded-md bg-[#eef3ef] text-[#3e6b5b] hover:bg-[#e1ede6] text-sm font-medium">Editar</button>
-                        <button onClick={() => handleDelete(p.id)} className="px-3 py-1 rounded-md bg-red-50 text-red-600 hover:bg-red-100 text-sm font-medium">Borrar</button>
-                      </div>
-                    </div>
-                  </div>
+                  <AdminProductMobileCard key={p.id} product={p} onEdit={handleEdit} onDelete={handleDelete} />
                 ))}
               </div>
             )}
