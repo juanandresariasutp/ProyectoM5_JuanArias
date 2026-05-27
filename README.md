@@ -1,57 +1,69 @@
-# E-commerce Platform - Proyecto Módulo 5 (Soy Henry)
+# Proyecto M5 — E-commerce (Creati Store)
 
-Bienvenido al repositorio de mi E-commerce, el proyecto integrador del Módulo 5 de la carrera de Full Stack Developer en Soy Henry. 
+Repositorio del proyecto integrador Módulo 5. Es una SPA e‑commerce construida con React + TypeScript y desplegada en Vercel.
 
-## 🚀 Tecnologías Utilizadas
+## 🚀 Tecnologías
 
-- **Frontend:** React, TypeScript, Vite.
-- **Estilos:** Tailwind CSS.
-- **Backend / BaaS:** Firebase (Auth y Firestore).
-- **Almacenamiento de Imágenes:** AWS S3 integrado mediante AWS SDK.
-- **Testing:** Vitest y React Testing Library.
-- **Despliegue:** Vercel.
+- Frontend: React, TypeScript, Vite
+- Estilos: Tailwind CSS
+- Autenticación y datos: Firebase (Auth, Firestore)
+- Almacenamiento de imágenes: AWS S3 (presigned URLs)
+- Tests: Vitest + React Testing Library
+- Despliegue: Vercel
 
-## 🌟 Funcionalidades Principales
+## Qué hace este proyecto
 
-- **Gestión de Usuarios (Auth):** Registro e inicio de sesión con email/contraseña y Google Auth. Todo enlazado automáticamente con Firestore.
-- **Catálogo de Productos:** Listado interactivo con imágenes, control de stock y etiquetas adaptativas de "Pocas unidades" o "Agotado".
-- **Carrito de Compras Persistente:** Posibilidad de agregar, eliminar y modificar cantidades respetando siempre el stock disponible. Si el producto se agota el botón se deshabilita para evitar errores de compra.
-- **Flujo de Checkout Seguro:** Verificación minuciosa de stock final, cálculo de totales gratis/envíos y registro de órdenes usando transacciones atomizadas (`Batch`) en Firestore para evitar venta de stock inexistente.
-- **Panel de Administración Privado:** Ruta protegida sólo para rol `admin`. Permite realizar todas las operaciones CRUD (Crear, Leer, Actualizar, Borrar) de los productos y subir imágenes externamente directo hacia AWS S3. Visualización y actualización del estado de las ventas/órdenes.
+- Registro / login (email + Google) y protección de rutas según rol (`admin` / `user`).
+- Catálogo de productos con control de stock y fichas de producto detalladas.
+- Carrito persistente en `localStorage` con verificación de stock en el checkout.
+- Checkout que crea órdenes y actualiza stock con operaciones atomizadas en Firestore.
+- Panel de administración privado para CRUD de productos y gestión de órdenes (subida de imágenes mediante presigned URLs).
 
-## 🏗 Arquitectura y Servicios (Microservicios y Cloud)
+## Arquitectura (resumen rápido)
 
-1. **Firebase Firestore:** Base de datos NoSQL donde modelamos nuestras colecciones `users`, `products` y `orders`.
-2. **Firebase Authentication:** Gestión de acceso, OAuth2 y protección de las rutas frontend (`RequireAuth` y `RequireAdmin`).
-3. **AWS S3:** Bucket en la nube de Amazon que utilizamos para optimizar el almacenamiento de imágenes binarias pesadas en la creación de productos.
-4. **Context API + Reducers (React):** `CartContext` y `AuthContext` administran de forma global y reactiva toda la aplicación evitando el _prop drilling_.
+- `src/services/*`: acceso centralizado a Firestore (`products`, `orders`).
+- `src/providers/*`: lógica y efectos (AuthProvider, CartProvider). Contexts sólo exponen tipos/creadores.
+- `src/hooks/*`: hooks consumidores (`useAuth`, `useCart`).
+- `src/pages/*`, `src/components/*`: UI y composición.
 
-## 🛠️ Instalación Local y Testeo
+## Instalación y ejecución local
 
-1. **Clonar el repositorio:**
-   ```bash
-   git clone https://github.com/juanandresariasutp/ProyectoM5_JuanArias.git
-   ```
-2. **Instalar dependencias:**
-   ```bash
-   npm install
-   ```
-3. **Configurar variables:** 
-   Renombra `.env.example` a `.env` y carga las credenciales de los servicios (Firebase/AWS SDK).
-4. **Ejecutar servidor local:**
-   ```bash
-   npm run dev
-   ```
+1. Clonar el repo:
 
-## 🧪 Pruebas Automatizadas
-La aplicación cuenta con cobertura de pruebas de integración y unidas _(TDD)_ que aísla totalmente a los proveedores cloud usando _vi.mock_:
+```bash
+git clone https://github.com/juanandresariasutp/ProyectoM5_JuanArias.git
+cd Proyecto-M5
+```
+
+2. Instalar dependencias:
+
+```bash
+npm install
+```
+
+3. Copiar variables de entorno:
+
+```bash
+cp .env.example .env
+# Rellenar las variables (Firebase config, AWS credentials usadas por el backend para presigned URLs)
+```
+
+4. Levantar el entorno de desarrollo:
+
+```bash
+npm run dev
+```
+
+5. Ejecutar tests:
+
 ```bash
 npm run test
 ```
 
-## 🔗 Enlaces
-- Sitio en producción: https://proyecto-m5-sable.vercel.app/
-- Documentación IA: [Documentación de uso de IA](Documentación_IA.md)
+## Enlaces
+
+- Demo en producción: https://proyecto-m5-sable.vercel.app/
+- Documentación IA (uso y cambios aplicados): [Documentación_IA.md](Documentación_IA.md)
 
 ## Autor del proyecto ✍️
 
