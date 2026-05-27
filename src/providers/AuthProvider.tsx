@@ -20,8 +20,9 @@ type UserDocument = {
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	const [user, setUser] = useState<User | null>(null)
 	const [role, setRole] = useState<string | null>(null)
+    // Agregamos estado de loading para manejar la carga inicial del usuario
 	const [loading, setLoading] = useState(true)
-
+ // Escuchamos cambios en la autenticación para mantener el estado actualizado
 	useEffect(() => {
 		const unsub = onAuthStateChanged(auth, async (u) => {
 			setUser(u)
