@@ -49,6 +49,10 @@ La aplicación cuenta con cobertura de pruebas de integración y unidas _(TDD)_ 
 npm run test
 ```
 
+## 🔗 Enlaces
+- Sitio en producción: https://proyecto-m5-sable.vercel.app/
+- Documentación IA: [Documentación de uso de IA](Documentación_IA.md)
+
 ## Autor del proyecto ✍️
 
 Juan Andrés Arias Tascón
