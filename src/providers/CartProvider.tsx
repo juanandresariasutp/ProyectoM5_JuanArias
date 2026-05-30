@@ -37,7 +37,7 @@ function cartReducer(state: CartState, action: CartAction): CartState {
 				}
 				return { ...state, items: newItems }
 			}
-      
+       
 			if (stock <= 0 || qtyToAdd <= 0) return state
 			const finalQty = Math.min(stock, qtyToAdd)
 			return { ...state, items: [...state.items, { product: action.payload.product, quantity: finalQty }] }
@@ -115,3 +115,5 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 		</CartContext.Provider>
 	)
 }
+
+//el reducer tiene estado local o global? El reducer tiene estado local, pero se comparte a través del contexto para que cualquier componente pueda acceder y modificar el estado del carrito.

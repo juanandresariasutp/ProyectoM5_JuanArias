@@ -17,3 +17,5 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 }
 
 export default ProtectedRoute
+
+//protected route sirve para proteger rutas que requieren autenticación. Si el usuario no está autenticado, se redirige a la página de inicio de sesión. Si el usuario está autenticado, se muestra el contenido protegido.
