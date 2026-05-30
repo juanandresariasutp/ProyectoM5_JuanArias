@@ -222,8 +222,6 @@ El proyecto está pensado para desplegarse en Vercel. El archivo `vercel.json` r
 ## Documentación adicional
 
 - [Documentación IA](Documentación_IA.md)
-- [Guion de sustentación](material_defensa/guion_sustentacion_completo.md)
-- [Material de defensa](material_defensa/)
 
 ## Demo en producción
 
